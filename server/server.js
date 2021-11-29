@@ -21,12 +21,21 @@ async function startServer () {
     });
 
     const subscriptionServer = SubscriptionServer.create(
-      { schema, execute, subscribe }, 
+      { schema, 
+        execute, 
+        subscribe,
+        onConnect: (connectionParams, socket) => {
+          const playerId = connectionParams.playerId;
+          return { playerId };
+        }}, 
       { server: httpServer, path: '/graphql' }
     );
 
     const server = new ApolloServer({
       schema,
+      context: ({req}) => {
+        return { playerId: req.headers.playerid }
+      },
       plugins: [{
         async serverWillStart() {
           return {
