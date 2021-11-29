@@ -7,15 +7,23 @@ import { WebSocketLink } from '@apollo/client/link/ws';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
+const playerId = prompt('enter id');
+
 const wsLink = new WebSocketLink({
   uri: 'ws://localhost:1337/graphql',
   options: {
-    reconnect: true
+    reconnect: true,
+    connectionParams: {
+      playerId,
+    }
   }
 })
 
 const httpLink = new HttpLink({
-  uri: 'http://localhost:1337/graphql'
+  uri: 'http://localhost:1337/graphql',
+  headers: {
+    playerid: playerId,
+  }
 })
 
 const splitLink = split(
@@ -37,7 +45,7 @@ const client = new ApolloClient({
 
 ReactDOM.render(
   <ApolloProvider client={client}>
-    <App />
+    <App playerId={playerId}/>
   </ApolloProvider>,
   document.getElementById('root')
 );
