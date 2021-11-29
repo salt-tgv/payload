@@ -1,23 +1,45 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect } from 'react'
+import { useQuery, gql } from '@apollo/client'
+
+const SUBSCRIBE_MESSAGES = gql`
+  subscription {
+    newMessage {
+      name
+      message
+    }
+  }
+`
 
 function App() {
+  const { subscribeToMore, loading, error, data } = useQuery(gql`
+    query getMessages {
+      messages {
+        name
+        message
+      }
+    }
+  `);
+
+  useEffect(() => {
+    subscribeToMore({
+      document: SUBSCRIBE_MESSAGES,
+      updateQuery: (prev, { subscriptionData }) => {
+        if (!subscriptionData.data) return prev;
+        const newData = subscriptionData.data.newMessage;
+        return {messages: [...prev.messages, newData]};
+      } 
+    })
+  }, []);
+    
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error :(</p>;
+  
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <p>Hello</p>
+      <ul>
+        {data.messages.map(data => <li>{data.message}</li>)}
+      </ul>
     </div>
   );
 }
