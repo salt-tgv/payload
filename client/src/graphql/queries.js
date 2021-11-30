@@ -18,13 +18,15 @@ query getMessages {
 }`
 
 const GET_ASSETS = gql`
-  assets {
-    playerId
+  query getAssets {
     assets {
-      destroyed
-      cells
-      destroyedCells
-      type
+      playerId
+      assets {
+        destroyed
+        cells
+        destroyedCells
+        type
+      }
     }
   }
 `
@@ -44,13 +46,15 @@ query getBoards {
 }`
 
 const SUBSCRIBE_ASSETS = gql`
-  assetUpdate {
-    playerId
-    assets {
-      destroyed
-      cells
-      destroyedCells
-      type
+  subscription gameUpdates {
+    assetUpdate {
+      playerId
+      assets {
+        destroyed
+        cells
+        destroyedCells
+        type
+      }
     }
   }
 `
