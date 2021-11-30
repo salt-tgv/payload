@@ -3,6 +3,7 @@
   width: 250px;
   height: 250px;
   margin: 50px;
+  transform: rotate(45deg) rotate3d(1, -1, 0, 45deg)
 }
 
 .board__column {

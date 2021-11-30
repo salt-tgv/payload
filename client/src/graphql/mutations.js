@@ -1,8 +1,8 @@
 import { gql } from '@apollo/client'
 
 const PLAY_MOVE = gql`
-  mutation {
-    playMove
+  mutation($coords: [Int]!) {
+    playMove(coords: $coords)
   }
 `
 

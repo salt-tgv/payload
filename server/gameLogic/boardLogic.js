@@ -1,8 +1,9 @@
 const boardGenerator = (num, value) => {
-  return boardArr = Array(num)
-    .fill(
-      Array(num).fill(value, 0, num)
-      , 0, num);
+  boardArr = Array(num).fill(0, 0, num);
+  return boardArr.map(elem => {
+    return Array(num).fill(value, 0, num);
+  })
+  
 }
 
 module.exports = boardGenerator;

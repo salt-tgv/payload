@@ -1,6 +1,27 @@
-.cell {
+.board__cell--unknown {
   height: 50px;
   width: 50px;
-  background: aqua;
-  border: 1px solid black;
+  background: rgb(20, 21, 24);
+  border: 1px solid rgb(33, 65, 80);
+}
+
+.board__cell--hit {
+  height: 50px;
+  width: 50px;
+  background: rgb(139, 0, 0);
+  border: 1px solid rgb(33, 65, 80);
+}
+
+.board__cell--miss {
+  height: 50px;
+  width: 50px;
+  background: rgb(0, 139, 69);
+  border: 1px solid rgb(33, 65, 80);
+}
+
+.board__cell--revealed {
+  height: 50px;
+  width: 50px;
+  background: rgb(255, 0, 0);
+  border: 1px solid rgb(33, 65, 80);
 }

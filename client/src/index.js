@@ -1,4 +1,4 @@
-import React from 'react';
+ import React from 'react';
 import ReactDOM from 'react-dom';
 import { ApolloClient, InMemoryCache, ApolloProvider, } from "@apollo/client";
 import { split, HttpLink } from '@apollo/client';
@@ -10,7 +10,7 @@ import reportWebVitals from './reportWebVitals';
 const playerId = prompt('enter id');
 
 const wsLink = new WebSocketLink({
-  uri: 'ws://localhost:1337/graphql',
+  uri: 'ws://192.168.34.236:1337/graphql',
   options: {
     reconnect: true,
     connectionParams: {
@@ -20,7 +20,7 @@ const wsLink = new WebSocketLink({
 })
 
 const httpLink = new HttpLink({
-  uri: 'http://localhost:1337/graphql',
+  uri: 'http://192.168.34.236:1337/graphql',
   headers: {
     playerid: playerId,
   }

@@ -25,7 +25,7 @@ function App({ playerId }) {
   const { gameState } = data;
   const myBoard = (playerId === gameState.board1.playerId) ? gameState.board1 : gameState.board2;
   const oppBoard = (playerId !== gameState.board1.playerId) ? gameState.board1 : gameState.board2;
-
+  console.log(oppBoard);
   return (
     <div className="App">
       <Board boardState={oppBoard.boardState} primary={true} playerId={playerId}/>
