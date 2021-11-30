@@ -1,4 +1,5 @@
 const { PubSub, withFilter } = require('graphql-subscriptions');
+const generateBoard = require('../gameLogic/boardLogic');
 const pubsub = new PubSub();
 
 const serverMessage = { welcome: "Welcome to Caj's Cool Chatroom", goodbye: "Thanks for visiting!"}
@@ -7,11 +8,11 @@ const messageArr = [];
 const gameState = {
   board1: {
     playerId: '1',
-    boardState: false,
+    boardState: generateBoard(5, false),
   },
   board2: {
     playerId: '2',
-    boardState: false,
+    boardState: generateBoard(5, false),
   },
   asset1 : {
 

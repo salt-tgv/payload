@@ -29,7 +29,7 @@ const typeDefs = gql`
 
   type Board {
     playerId: String!
-    boardState: Boolean!
+    boardState: [[Boolean]]!
   }
 
   type gameState {

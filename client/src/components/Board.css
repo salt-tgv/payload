@@ -1,13 +1,11 @@
-.on, .off {
-  width: 100px;
-  height: 100px;
+.board {
+  display: flex;
+  width: 250px;
+  height: 250px;
   margin: 50px;
 }
 
-.on {
-  background: green;
-}
-
-.off {
-  background: red;
+.board__column {
+  display: flex;
+  flex-direction: column;
 }
