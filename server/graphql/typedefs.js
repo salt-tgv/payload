@@ -19,6 +19,7 @@ const typeDefs = gql`
     serverMessages: serverMessages
     messages: [chatMessage]
     gameState: gameState
+    assets: assets
   }
 
   type chatMessage {

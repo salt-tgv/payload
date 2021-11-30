@@ -17,6 +17,18 @@ query getMessages {
   }
 }`
 
+const GET_ASSETS = gql`
+  assets {
+    playerId
+    assets {
+      destroyed
+      cells
+      destroyedCells
+      type
+    }
+  }
+`
+
 const GET_BOARDS = gql`
 query getBoards {
   gameState {
@@ -30,6 +42,18 @@ query getBoards {
     }
   }
 }`
+
+const SUBSCRIBE_ASSETS = gql`
+  assetUpdate {
+    playerId
+    assets {
+      destroyed
+      cells
+      destroyedCells
+      type
+    }
+  }
+`
 
 const SUBSCRIBE_BOARDS = gql`
 subscription gameUpdates {

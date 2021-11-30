@@ -20,9 +20,9 @@
 * Try out subscriptions with Apollo Server, some easy thing on the front end, f.e a blinking light  -->
 
 ### Step 2
-* Grid sending events through GraphQL. 
-* Hardcode some ships to test against. 
-* Two hardcoded users and a gameboard on init
+<!-- * Grid sending events through GraphQL.  -->
+<!-- * Hardcode some ships to test against.  -->
+<!-- * Two hardcoded users and a gameboard on init -->
 * Implement core game logic
 * Set up MongoDB within the resolvers. 
 

@@ -45,6 +45,12 @@ const resolvers = {
         board1: gameState.board1,
         board2: gameState.board2,
       }
+    },
+    assets: (parent, args, context) => {
+      if (context.playerId === gameState.asset1.playerId)
+        return gameState.asset1;
+      else if (context.playerId === gameState.asset2.playerId)
+        return gameState.asset2;
     }
   },
   Mutation: {
