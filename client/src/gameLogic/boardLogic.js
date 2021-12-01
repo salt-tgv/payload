@@ -1,4 +1,5 @@
-import Cell from '../components/Cell'
+import PlayCell from '../components/PlayCell'
+import PlacementCell from '../components/PlacementCell'
 
 
 const getAssetType = (assets, x, y) => {
@@ -17,9 +18,9 @@ const getAssetType = (assets, x, y) => {
   return null;
 }
 
-const generateBoard = (boardState, active, assets) => {
+const generateBoard = (boardState, active, assets, Cell) => {
   return boardState.map((xArr, x) => {
-    const newXArr = xArr.map((yCell, y) => <Cell 
+    const newXArr = xArr.map((yCell, y) => <Cell
       key={`${x},${y}`} 
       cellData={yCell} 
       x={x} y={y}
@@ -30,6 +31,10 @@ const generateBoard = (boardState, active, assets) => {
   })
 }
 
+const generatePlayBoard = (boardState, active, assets) => generateBoard(boardState, active, assets, PlayCell)
+const generatePlacementBoard = (boardState) => generateBoard(boardState, true, null, PlacementCell)
+
 export {
-  generateBoard,
+  generatePlayBoard,
+  generatePlacementBoard,
 }

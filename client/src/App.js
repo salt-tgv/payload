@@ -3,6 +3,7 @@ import { useQuery } from '@apollo/client'
 import { GET_BOARDS, SUBSCRIBE_BOARDS} from './graphql/queries';
 import OppBoard from './components/OppBoard';
 import MyBoard from './components/MyBoard';
+import PlacementBoard from './components/PlacementBoard';
 
 
 function App({ playerId }) {
@@ -31,11 +32,18 @@ function App({ playerId }) {
   }
   const myBoard = (playerId === gameState.board1.playerId) ? gameState.board1 : gameState.board2;
   const oppBoard = (playerId !== gameState.board1.playerId) ? gameState.board1 : gameState.board2;
-  console.log(oppBoard);
+
+  const bothReady = (gameState.player1.ready && gameState.player2.ready);
+
+  const playBoards = <>
+    <OppBoard boardState={oppBoard.boardState}/>
+    <MyBoard boardState={myBoard.boardState}/>
+  </>;
+
+
   return (
     <div className="App">
-      <OppBoard boardState={oppBoard.boardState}/>
-      <MyBoard boardState={myBoard.boardState}/>
+      {bothReady ? playBoards : <PlacementBoard gameState={gameState} board={myBoard} playerId={playerId}/>}
     </div>
   );
 }

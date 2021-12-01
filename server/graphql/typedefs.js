@@ -42,9 +42,15 @@ const typeDefs = gql`
     boardState: [[cellState!]]!
   }
 
+  type Player {
+    ready: Boolean!
+  }
+
   type gameState {
     activePlayer: String!
     winner: String!
+    player1: Player!
+    player2: Player!
     board1: Board!
     board2: Board!
   }

@@ -1,0 +1,14 @@
+.placement-inventory {
+  background: pink;
+}
+
+.placement-inventory__button--active {
+  opacity: 0.6;
+  width: 50px;
+  height: 50px;
+}
+
+.placement-inventory__button {
+  width: 50px;
+  height: 50px;
+}

@@ -23,6 +23,12 @@ query getBoards {
   gameState {
     activePlayer
     winner
+    player1{
+      ready
+    }
+    player2{
+      ready
+    }
     board1 {
       playerId
       boardState

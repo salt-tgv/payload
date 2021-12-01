@@ -1,7 +1,7 @@
 import { useMutation, useQuery } from '@apollo/client'
 import { useEffect } from 'react';
 import { GET_ASSETS, SUBSCRIBE_ASSETS } from '../graphql/queries';
-import { generateBoard } from '../gameLogic/boardLogic';
+import { generatePlayBoard } from '../gameLogic/boardLogic';
 import './Board.css';
 
 function MyBoard ({ boardState }) {
@@ -24,7 +24,7 @@ function MyBoard ({ boardState }) {
   const { assets } = data.assets;
 
   return (
-    <div className="board">{generateBoard(boardState, false, assets)}</div>
+    <div className="board">{generatePlayBoard(boardState, false, assets)}</div>
   )
 }
 

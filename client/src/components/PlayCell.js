@@ -1,8 +1,11 @@
-import './Cell.css';
+import './PlayCell.css';
 import { useMutation } from '@apollo/client';
+import { useState } from 'react';
 import { PLAY_MOVE } from '../graphql/mutations';
 
-function Cell ({ cellData, x, y, active, assetType }) {
+function PlayCell ({ cellData, x, y, active, assetType }) {
+
+  const [hoverClass, setHoverClass] = useState('');
 
   const [playMove] = useMutation(PLAY_MOVE);
   const handleClick = (active && cellData === 'UNKNOWN')
@@ -32,12 +35,24 @@ function Cell ({ cellData, x, y, active, assetType }) {
     }
   }
 
+  const handleMouseEnter = () => {
+    setHoverClass('board__cell--hover');
+  }
+
+  const handleMouseLeave = () => {
+    setHoverClass('');
+  }
+
+  const cellClassList = `${cellClass()} ${hoverClass}`
+
   return (
     <div>
       <div 
-        className={cellClass()} 
+        className={cellClassList} 
         id={`${x},${y}`}
-        onClick={handleClick}>
+        onClick={handleClick}
+        onMouseEnter={active ? handleMouseEnter : ''}
+        onMouseLeave={active ? handleMouseLeave : ''}>
       </div>
       <div>
 
@@ -46,4 +61,4 @@ function Cell ({ cellData, x, y, active, assetType }) {
   )
 }
 
-export default Cell;
+export default PlayCell;

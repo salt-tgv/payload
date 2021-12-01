@@ -11,7 +11,12 @@ const gameState = {
   activePlayer: '1',
   inactivePlayer: '2',
   winner: '',
-
+  player1: {
+    ready: false,
+  },
+  player2: {
+    ready: false,
+  },
   board1: {
     playerId: '1',
     boardState: generateBoard(5, 'UNKNOWN'),
@@ -47,6 +52,8 @@ const resolvers = {
     gameState: (parent, args, context, info) => {
       return {
         activePlayer: gameState.activePlayer,
+        player1: gameState.player1,
+        player2: gameState.player2,
         winner: gameState.winner,
         board1: gameState.board1,
         board2: gameState.board2,
