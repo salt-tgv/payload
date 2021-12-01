@@ -1,7 +1,8 @@
 import React, { useEffect } from 'react'
 import { useQuery } from '@apollo/client'
 import { GET_BOARDS, SUBSCRIBE_BOARDS} from './graphql/queries';
-import Board from './components/Board';
+import OppBoard from './components/OppBoard';
+import MyBoard from './components/MyBoard';
 
 
 function App({ playerId }) {
@@ -14,7 +15,7 @@ function App({ playerId }) {
       updateQuery: (prev, { subscriptionData }) => {
         if (!subscriptionData.data) return prev;
         const newData = subscriptionData.data;
-        return {gameState: newData.gameUpdate};
+        return { gameState: newData.gameUpdate};
       } 
     })
   }, []);
@@ -28,8 +29,8 @@ function App({ playerId }) {
   console.log(oppBoard);
   return (
     <div className="App">
-      <Board boardState={oppBoard.boardState} primary={true} playerId={playerId}/>
-      <Board boardState={myBoard.boardState} primary={false}/>
+      <OppBoard boardState={oppBoard.boardState}/>
+      <MyBoard boardState={myBoard.boardState}/>
     </div>
   );
 }

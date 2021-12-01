@@ -25,3 +25,17 @@
   background: rgb(255, 0, 0);
   border: 1px solid rgb(33, 65, 80);
 }
+
+.board__cell--asset {
+  height: 50px;
+  width: 50px;
+  background: rgb(133, 140, 161);
+  border: 1px solid rgb(33, 65, 80);
+}
+
+.board__cell--destroyed {
+  height: 50px;
+  width: 50px;
+  background: rgb(161, 133, 133);
+  border: 1px solid rgb(189, 7, 7);
+}

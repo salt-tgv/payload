@@ -1,6 +1,6 @@
 const { PubSub, withFilter } = require('graphql-subscriptions');
 const generateBoard = require('../gameLogic/boardLogic');
-const { checkMove, updateAsset, updateRevealed } = require('../gameLogic/moveLogic');
+const { checkMove, updateAsset, updateRevealed, resolveMove } = require('../gameLogic/moveLogic');
 const pubsub = new PubSub();
 
 const serverMessage = { welcome: "Welcome to Caj's Cool Chatroom", goodbye: "Thanks for visiting!"}
@@ -19,9 +19,9 @@ const gameState = {
   asset1: {
     playerId: '1',
     assets: [
-      { destroyed: false, cells: [[1, 3], [2, 3]], destroyedCells: [], type: 'DB'}, 
-      { destroyed: false, cells: [[4, 1]], destroyedCells: [], type: 'DB' }, 
-      { destroyed: false, cells: [[3, 2]], destroyedCells: [], type: 'DB' }
+      { destroyed: false, cells: [[0, 0], [0, 1]], destroyedCells: [], type: 'DB'}, 
+      { destroyed: false, cells: [[2, 4]], destroyedCells: [], type: 'DB' }, 
+      { destroyed: false, cells: [[4, 4]], destroyedCells: [], type: 'DB' }
     ]
 }
   ,
@@ -60,24 +60,9 @@ const resolvers = {
       return args
     },
     playMove: (parent, args, context) => {
-      if (context.playerId === '1') {
-        const result = checkMove(args.coords, gameState.asset2.assets)
-        gameState.board2.boardState[args.coords[0]][args.coords[1]] = result;
-        if (result === 'HIT') {
-          gameState.asset2.assets = updateAsset(args.coords, gameState.asset2.assets)
-          gameState.board2.boardState = updateRevealed(gameState.asset2.assets, gameState.board2.boardState);
-          pubsub.publish('ASSET_UPDATE', { assetUpdate: gameState.asset2 });
-        }
-      } else if (context.playerId === '2') {
-        const result = checkMove(args.coords, gameState.asset1.assets)
-        gameState.board1.boardState[args.coords[0]][args.coords[1]] = result;
-        if (result === 'HIT') {
-          gameState.asset1.assets = updateAsset(args.coords, gameState.asset1.assets);
-          gameState.board1.boardState = updateRevealed(gameState.asset1.assets, gameState.board1.boardState);
-          pubsub.publish('ASSET_UPDATE', { assetUpdate: gameState.asset1 });
-        }
-      }
-      
+      /** WARNING: gameState is a reference to gameState (pointer) */
+      const updatedAsset = resolveMove(gameState, args.coords, context.playerId);
+      pubsub.publish('ASSET_UPDATE', { assetUpdate: updatedAsset })
       pubsub.publish('GAME_UPDATE', { gameUpdate: { board1: gameState.board1, board2: gameState.board2 }});
     },
   },

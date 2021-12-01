@@ -2,7 +2,7 @@ import './Cell.css';
 import { useMutation } from '@apollo/client';
 import { PLAY_MOVE } from '../graphql/mutations';
 
-function Cell ({ cellData, x, y, active }) {
+function Cell ({ cellData, x, y, active, assetType }) {
 
   const [playMove] = useMutation(PLAY_MOVE);
   const handleClick = (active && cellData === 'UNKNOWN')
@@ -11,6 +11,13 @@ function Cell ({ cellData, x, y, active }) {
     }
     : null
   const cellClass = () => { 
+    if (assetType) {
+      if (/DESTROYED/.test(assetType)){
+        return 'board__cell--destroyed'
+      }
+      return 'board__cell--asset';
+    }
+
     switch(cellData) {
       case 'UNKNOWN':
         return "board__cell--unknown";

@@ -10,7 +10,7 @@ import reportWebVitals from './reportWebVitals';
 const playerId = prompt('enter id');
 
 const wsLink = new WebSocketLink({
-  uri: 'ws://192.168.34.236:1337/graphql',
+  uri: 'ws://localhost:1337/graphql',
   options: {
     reconnect: true,
     connectionParams: {
@@ -20,7 +20,7 @@ const wsLink = new WebSocketLink({
 })
 
 const httpLink = new HttpLink({
-  uri: 'http://192.168.34.236:1337/graphql',
+  uri: 'http://localhost:1337/graphql',
   headers: {
     playerid: playerId,
   }
