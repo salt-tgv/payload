@@ -21,6 +21,8 @@ query getMessages {
 const GET_BOARDS = gql`
 query getBoards {
   gameState {
+    activePlayer
+    winner
     board1 {
       playerId
       boardState

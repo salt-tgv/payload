@@ -43,6 +43,8 @@ const typeDefs = gql`
   }
 
   type gameState {
+    activePlayer: String!
+    winner: String!
     board1: Board!
     board2: Board!
   }

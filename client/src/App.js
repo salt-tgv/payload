@@ -22,8 +22,13 @@ function App({ playerId }) {
     
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error :(</p>;
-
+  
   const { gameState } = data;
+  const { winner } = gameState;
+  if (winner) {
+    let gameEndMsg = winner === playerId ? 'You have won!' : 'Sorry bro...';
+    alert(gameEndMsg);
+  }
   const myBoard = (playerId === gameState.board1.playerId) ? gameState.board1 : gameState.board2;
   const oppBoard = (playerId !== gameState.board1.playerId) ? gameState.board1 : gameState.board2;
   console.log(oppBoard);

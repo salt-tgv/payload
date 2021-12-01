@@ -1,6 +1,6 @@
 const { PubSub, withFilter } = require('graphql-subscriptions');
 const generateBoard = require('../gameLogic/boardLogic');
-const { checkMove, updateAsset, updateRevealed, resolveMove } = require('../gameLogic/moveLogic');
+const { checkMove, updateAsset, updateRevealed, resolveMove, checkWin } = require('../gameLogic/moveLogic');
 const pubsub = new PubSub();
 
 const serverMessage = { welcome: "Welcome to Caj's Cool Chatroom", goodbye: "Thanks for visiting!"}
@@ -8,6 +8,10 @@ const messageArr = [];
 
 const gameState = {
   gameId: '1',
+  activePlayer: '1',
+  inactivePlayer: '2',
+  winner: '',
+
   board1: {
     playerId: '1',
     boardState: generateBoard(5, 'UNKNOWN'),
@@ -42,6 +46,8 @@ const resolvers = {
     messages: () => messageArr,
     gameState: (parent, args, context, info) => {
       return {
+        activePlayer: gameState.activePlayer,
+        winner: gameState.winner,
         board1: gameState.board1,
         board2: gameState.board2,
       }
@@ -61,9 +67,17 @@ const resolvers = {
     },
     playMove: (parent, args, context) => {
       /** WARNING: gameState is a reference to gameState (pointer) */
-      const updatedAsset = resolveMove(gameState, args.coords, context.playerId);
-      pubsub.publish('ASSET_UPDATE', { assetUpdate: updatedAsset })
-      pubsub.publish('GAME_UPDATE', { gameUpdate: { board1: gameState.board1, board2: gameState.board2 }});
+      if (gameState.activePlayer === context.playerId) {
+        const updatedAsset = resolveMove(gameState, args.coords, context.playerId);
+        pubsub.publish('ASSET_UPDATE', { assetUpdate: updatedAsset })
+        pubsub.publish('GAME_UPDATE', { gameUpdate: { board1: gameState.board1, board2: gameState.board2 }});
+        checkWin(gameState);
+        gameState.activePlayer = gameState.inactivePlayer;
+        gameState.inactivePlayer = context.playerId;
+        if (gameState.winner) {
+          console.log(`${gameState.winner} has won!`)
+        }
+      }
     },
   },
   Subscription: {

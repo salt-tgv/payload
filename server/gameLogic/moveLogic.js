@@ -56,9 +56,18 @@ const resolveMove = (gameState, coords, playerId) => {
   }
 }
 
+const checkWin = (gameState) => {
+  const { activePlayer, asset1, asset2 } = gameState;
+  const inactiveAssets = (activePlayer === asset1.playerId) ? asset2 : asset1;
+  if (inactiveAssets.assets.every(asset => asset.destroyed)) {
+    gameState.winner = activePlayer;
+  }
+}
+
 module.exports = {
   checkMove,
   updateAsset, 
   updateRevealed,
   resolveMove,
+  checkWin
 }
