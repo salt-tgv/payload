@@ -3,10 +3,15 @@ import { PLAY_MOVE } from '../graphql/mutations';
 import { generatePlayBoard } from '../gameLogic/boardLogic';
 import './Board.css';
 
-function OppBoard ({ boardState }) {
+function OppBoard ({ boardState, isMyTurn }) {
 
   return (
-    <div className="board">{generatePlayBoard(boardState, true)}</div>
+    <div className="board">
+      <div className="grid">
+      { generatePlayBoard(boardState, true)}
+      </div>
+      <h2>{isMyTurn ? "Your Turn" : "Opponent's Turn"}</h2>
+    </div>
   )
 }
 

@@ -6,6 +6,10 @@
   transform: rotate(45deg) rotate3d(1, -1, 0, 45deg)
 }
 
+.grid {
+  display: flex;
+}
+
 .board__column {
   display: flex;
   flex-direction: column;

@@ -32,10 +32,12 @@ function App({ playerId }) {
   const myBoard = (playerId === gameState.board1.playerId) ? gameState.board1 : gameState.board2;
   const oppBoard = (playerId !== gameState.board1.playerId) ? gameState.board1 : gameState.board2;
 
+  const isMyTurn = (playerId === gameState.activePlayer)
+
   const areBothReady = (gameState.player1.ready && gameState.player2.ready);
 
   const playBoards = <>
-    <OppBoard boardState={oppBoard.boardState}/>
+    <OppBoard boardState={oppBoard.boardState} isMyTurn={isMyTurn}/>
     <MyBoard boardState={myBoard.boardState}/>
   </>;
 
