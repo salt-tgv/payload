@@ -48,7 +48,7 @@ const generatePlacementBoard = (boardState, onClickCb, onEnterCb, onLeaveCb) => 
 const boardGenerator = (num, value) => {
   const boardArr = Array(num).fill(0, 0, num);
   return boardArr.map(elem => {
-    return Array(num).fill(value, 0, num);
+    return Array(num).fill(0, 0, num).map(arr => ({...value}));
   })
 }
 
