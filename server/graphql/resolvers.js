@@ -27,22 +27,12 @@ const gameState = {
   },
   asset1: {
     playerId: '1',
-    assets: [
-      { destroyed: false, cells: [[0, 0], [0, 1]], destroyedCells: [], type: 'DB'}, 
-      { destroyed: false, cells: [[2, 4]], destroyedCells: [], type: 'DB' }, 
-      { destroyed: false, cells: [[4, 4]], destroyedCells: [], type: 'DB' }
-    ]
-}
-  ,
+    assets: []
+  },
   asset2: {
     playerId: '2',
-    assets: [
-      { destroyed: false, cells: [[1, 3], [2, 3]], destroyedCells: [], type: 'DB' }, 
-      { destroyed: false, cells: [[4, 1]], destroyedCells: [], type: 'DB' }, 
-      { destroyed: false, cells: [[3, 2]], destroyedCells: [], type: 'DB' }
-    ]
+    assets: []
   }
-
 }
 
 const resolvers = {
@@ -77,14 +67,45 @@ const resolvers = {
       if (gameState.activePlayer === context.playerId) {
         const updatedAsset = resolveMove(gameState, args.coords, context.playerId);
         pubsub.publish('ASSET_UPDATE', { assetUpdate: updatedAsset })
-        pubsub.publish('GAME_UPDATE', { gameUpdate: { board1: gameState.board1, board2: gameState.board2 }});
         checkWin(gameState);
         gameState.activePlayer = gameState.inactivePlayer;
         gameState.inactivePlayer = context.playerId;
+        pubsub.publish('GAME_UPDATE', { gameUpdate: { 
+          player1: gameState.player1,
+          player2: gameState.player2,
+          board1: gameState.board1, 
+          board2: gameState.board2, 
+          winner: gameState.winner, 
+          activePlayer: gameState.activePlayer}});
         if (gameState.winner) {
           console.log(`${gameState.winner} has won!`)
         }
       }
+    },
+    placeAssets: (parent, args, context) => {
+      const { assetsToPlace } = args;
+      const { playerId } = context;
+      assetsToPlace.forEach(asset => {
+        asset.destroyed = false;
+        asset.destroyedCells = [];
+      })
+
+      if (gameState.asset1.playerId === playerId) {
+        gameState.asset1.assets = assetsToPlace; 
+        gameState.player1.ready = true;
+      } else if (gameState.asset2.playerId === playerId) {
+        gameState.asset2.assets = assetsToPlace;
+        gameState.player2.ready = true;
+      }
+      pubsub.publish(['GAME_UPDATE'], { gameUpdate: { 
+        player1: gameState.player1, 
+        player2: gameState.player2, 
+        board1: gameState.board1, 
+        board2: gameState.board2, 
+        winner: gameState.winner,
+        activePlayer: gameState.activePlayer,
+      }})
+
     },
   },
   Subscription: {

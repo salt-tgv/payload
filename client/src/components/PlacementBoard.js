@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { useMutation } from '@apollo/client';
 import PlacementInventory from './PlacementInventory';
 import PlacedInventory from './PlacedInventory';
+import { PLAYER_CONFIRM } from '../graphql/mutations';
 
 const assetList = [
   {
@@ -35,6 +36,7 @@ const [assetsToPlace, setAssetsToPlace] = useState(assetList);
 const [placedAssets, setPlacedAssets] = useState([]);
 const [activeAssetIndex, setActiveAssetIndex] = useState(-1);
 const [placementBoardState, setPlacementBoardState] = useState(boardGenerator(5, initialCellValue));
+const [playerConfirm] = useMutation(PLAYER_CONFIRM);
 
 const onClickCb = (x, y, cellData) => {
   if(activeAssetIndex !== -1){
@@ -133,11 +135,17 @@ const resetPlacedAsset = (index) => {
   setAssetsToPlace([...assetsToPlace, ...resetAsset]);
 }
 
+const player = gameState.board1.playerId === playerId ? 'player1' : 'player2'
+
 return (
   <div className="board">
     <PlacementInventory assets={assetsToPlace} activeAssetIndex={activeAssetIndex} setActiveAssetIndex={setActiveAssetIndex}/>
     {generatePlacementBoard(placementBoardState, onClickCb, onEnterCb, onLeaveCb)}
     <PlacedInventory assets={placedAssets} resetPlacedAsset={resetPlacedAsset} />
+    {(assetsToPlace.length === 0 && !gameState[player].ready) && <button className="board__confirm" onClick={()=> {
+      playerConfirm({ variables: { assetsToPlace: placedAssets.map(asset => ({cells: asset.cells, type: asset.type})) }})
+    }}>CONFIRM!</button>}
+    {(assetsToPlace.length === 0 && gameState[player].ready) && <h2>Waiting for your slow opponent</h2>}
   </div>)
 }
 

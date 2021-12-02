@@ -9,7 +9,6 @@ import PlacementBoard from './components/PlacementBoard';
 function App({ playerId }) {
   const { subscribeToMore, loading, error, data } = useQuery(GET_BOARDS);
   
-
   useEffect(() => {
     subscribeToMore({
       document: SUBSCRIBE_BOARDS,
@@ -33,7 +32,7 @@ function App({ playerId }) {
   const myBoard = (playerId === gameState.board1.playerId) ? gameState.board1 : gameState.board2;
   const oppBoard = (playerId !== gameState.board1.playerId) ? gameState.board1 : gameState.board2;
 
-  const bothReady = (gameState.player1.ready && gameState.player2.ready);
+  const areBothReady = (gameState.player1.ready && gameState.player2.ready);
 
   const playBoards = <>
     <OppBoard boardState={oppBoard.boardState}/>
@@ -43,7 +42,7 @@ function App({ playerId }) {
 
   return (
     <div className="App">
-      {bothReady ? playBoards : <PlacementBoard gameState={gameState} playerId={playerId}/>}
+      {areBothReady ? playBoards : <PlacementBoard gameState={gameState} playerId={playerId}/>}
     </div>
   );
 }

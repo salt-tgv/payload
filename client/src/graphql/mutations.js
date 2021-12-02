@@ -5,7 +5,12 @@ const PLAY_MOVE = gql`
     playMove(coords: $coords)
   }
 `
+const PLAYER_CONFIRM = gql`
+mutation($assetsToPlace: [AssetToPlace]) {
+  placeAssets(assetsToPlace: $assetsToPlace)
+}`
 
 export { 
   PLAY_MOVE,
+  PLAYER_CONFIRM
 }

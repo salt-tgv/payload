@@ -51,8 +51,8 @@ function PlayCell ({ cellData, x, y, active, assetType }) {
         className={cellClassList} 
         id={`${x},${y}`}
         onClick={handleClick}
-        onMouseEnter={active ? handleMouseEnter : ''}
-        onMouseLeave={active ? handleMouseLeave : ''}>
+        onMouseEnter={active ? handleMouseEnter : () => {}}
+        onMouseLeave={active ? handleMouseLeave : () => {}}>
       </div>
       <div>
 

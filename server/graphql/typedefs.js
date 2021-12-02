@@ -9,6 +9,11 @@ const typeDefs = gql`
     SERVER
   }
 
+  enum assetType {
+    DB
+    SERVER
+  }
+
   type serverMessages {
     welcome: String!
     goodbye: String!
@@ -26,9 +31,15 @@ const typeDefs = gql`
     message: String!
   }
 
+  input AssetToPlace {
+    cells: [[Int!]]
+    type: assetType!
+  }
+
   type Mutation {
     sendMessage(name: String!, message: String!): chatMessage
     playMove(coords: [Int]!): Boolean
+    placeAssets(assetsToPlace: [AssetToPlace]): Boolean
   }
 
   type Subscription {
