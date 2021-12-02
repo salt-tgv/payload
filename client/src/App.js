@@ -43,7 +43,7 @@ function App({ playerId }) {
 
   return (
     <div className="App">
-      {bothReady ? playBoards : <PlacementBoard gameState={gameState} board={myBoard} playerId={playerId}/>}
+      {bothReady ? playBoards : <PlacementBoard gameState={gameState} playerId={playerId}/>}
     </div>
   );
 }

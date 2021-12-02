@@ -1,4 +1,4 @@
-import { generatePlacementBoard } from '../gameLogic/boardLogic';
+import { generatePlacementBoard, boardGenerator } from '../gameLogic/boardLogic';
 import { useState } from 'react';
 import PlacementInventory from './PlacementInventory';
 
@@ -30,15 +30,37 @@ const assetList = [
   },
 ]
 
-function PlacementBoard ({ board, gameState, playerId }) {
+const initialCellValue = {
+  hover: false,
+  asset: 'NONE'
+}
+
+function PlacementBoard ({ gameState, playerId }) {
 const [assetsToPlace, setAssetsToPlace] = useState(assetList);
 const [placedAssets, setPlacedAssets] = useState([]);
-const [activeAsset, setActiveAsset] = useState(-1);
+const [activeAssetIndex, setActiveAssetIndex] = useState(-1);
+const [placementBoardState, setPlacementBoardState] = useState(boardGenerator(5, initialCellValue));
+
+const onClickCb = (x, y, cellData) => {}
+const onEnterCb = (x, y) => {
+  if(activeAssetIndex !== -1){
+    const newBoardState = [...placementBoardState];
+    newBoardState[x][y].hover = true;
+    setPlacementBoardState(newBoardState);
+  }
+}
+const onLeaveCb = (x, y) => {
+  if(activeAssetIndex !== -1){
+    const newBoardState = [...placementBoardState];
+    newBoardState[x][y].hover = false;
+    setPlacementBoardState(newBoardState);
+  }
+}
 
 return (
   <div className="board">
-    <PlacementInventory assets={assetsToPlace} activeAsset={activeAsset} setActiveAsset={setActiveAsset}/>
-    {generatePlacementBoard(board.boardState, true)}
+    <PlacementInventory assets={assetsToPlace} activeAssetIndex={activeAssetIndex} setActiveAssetIndex={setActiveAssetIndex}/>
+    {generatePlacementBoard(placementBoardState, onClickCb, onEnterCb, onLeaveCb)}
   </div>)
 }
 

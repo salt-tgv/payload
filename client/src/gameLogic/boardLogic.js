@@ -31,10 +31,31 @@ const generateBoard = (boardState, active, assets, Cell) => {
   })
 }
 
+const generatePlacementBoard = (boardState, onClickCb, onEnterCb, onLeaveCb) => {
+  return boardState.map((xArr, x) => {
+    const newXArr = xArr.map((yCell, y) => <PlacementCell
+      key={`${x},${y}`}
+      cellData={yCell} 
+      x={x} y={y}
+      onClickCb={onClickCb}
+      onEnterCb={onEnterCb}
+      onLeaveCb={onLeaveCb}
+    />)
+    return <div key={x} className="board__column">{newXArr}</div>
+  })
+}
+
+const boardGenerator = (num, value) => {
+  const boardArr = Array(num).fill(0, 0, num);
+  return boardArr.map(elem => {
+    return Array(num).fill(value, 0, num);
+  })
+}
+
 const generatePlayBoard = (boardState, active, assets) => generateBoard(boardState, active, assets, PlayCell)
-const generatePlacementBoard = (boardState) => generateBoard(boardState, true, null, PlacementCell)
 
 export {
   generatePlayBoard,
   generatePlacementBoard,
+  boardGenerator,
 }
