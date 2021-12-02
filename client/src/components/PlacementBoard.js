@@ -145,7 +145,7 @@ return (
     {(assetsToPlace.length === 0 && !gameState[player].ready) && <button className="board__confirm" onClick={()=> {
       playerConfirm({ variables: { assetsToPlace: placedAssets.map(asset => ({cells: asset.cells, type: asset.type})) }})
     }}>CONFIRM!</button>}
-    {(assetsToPlace.length === 0 && gameState[player].ready) && <h2>Waiting for your slow opponent</h2>}
+    {(assetsToPlace.length === 0 && gameState[player].ready) && <h2>Waiting for your slow opponent...</h2>}
   </div>)
 }
 
