@@ -21,7 +21,7 @@ const assetList = [
   {
     cells: [],
     type: 'DB',
-    size: 2,
+    size: 1,
     vertical: false,
   },
 ]
