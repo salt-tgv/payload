@@ -4,6 +4,7 @@ const { execute, subscribe } = require('graphql');
 const { SubscriptionServer } = require('subscriptions-transport-ws');
 const { makeExecutableSchema } = require('@graphql-tools/schema');
 const express = require('express');
+const path = require('path');
 const typeDefs = require('./graphql/typedefs');
 const resolvers = require('./graphql/resolvers');
 
