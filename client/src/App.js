@@ -1,11 +1,23 @@
+import React, { useState } from 'react';
+import {
+  BrowserRouter,
+  Routes,
+  Route
+} from "react-router-dom";
+import Login from './login/Login'
 import InitializeGame from './game/InitializeGame'
 
 function App() {
-  const playerId = prompt('enter id');
+  const [playerId, setPlayerId] = useState('');
 
   return (<>
-    { playerId && <InitializeGame playerId={playerId} /> }
-    </>
+    <BrowserRouter>
+    <Routes>
+      <Route path="/login" element={<Login setPlayerId={setPlayerId} />}></Route>
+      <Route path="/" element={<InitializeGame playerId={playerId} />}></Route>
+    </Routes>
+    </BrowserRouter>
+  </>
   )
 }
 

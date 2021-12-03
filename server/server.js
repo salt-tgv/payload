@@ -4,7 +4,6 @@ const { execute, subscribe } = require('graphql');
 const { SubscriptionServer } = require('subscriptions-transport-ws');
 const { makeExecutableSchema } = require('@graphql-tools/schema');
 const express = require('express');
-const path = require('path');
 const typeDefs = require('./graphql/typedefs');
 const resolvers = require('./graphql/resolvers');
 
@@ -34,8 +33,8 @@ async function startServer () {
 
     const server = new ApolloServer({
       schema,
-      context: ({req}) => {
-        return { playerId: req.headers.playerid }
+      context: ({ req, res }) => {
+        return { playerId: req.headers.playerid, res }
       },
       plugins: [{
         async serverWillStart() {

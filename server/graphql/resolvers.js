@@ -57,6 +57,10 @@ const resolvers = {
     }
   },
   Mutation: {
+    /** Login mutation */
+    /** Signup mutation */
+    /** Create Game Mutation */
+    /** Join Game Mutation */
     sendMessage: (_, args) => {
       messageArr.push(args)
       pubsub.publish('NEW_MESSAGE', { newMessage: args })
