@@ -139,7 +139,7 @@ const player = gameState.board1.playerId === playerId ? 'player1' : 'player2'
 
 return (
   <div className="board">
-    <PlacementInventory assets={assetsToPlace} activeAssetIndex={activeAssetIndex} setActiveAssetIndex={setActiveAssetIndex}/>
+    <PlacementInventory assets={assetsToPlace} setAssets={setAssetsToPlace} activeAssetIndex={activeAssetIndex} setActiveAssetIndex={setActiveAssetIndex}/>
     {generatePlacementBoard(placementBoardState, onClickCb, onEnterCb, onLeaveCb)}
     <PlacedInventory assets={placedAssets} resetPlacedAsset={resetPlacedAsset} />
     {(assetsToPlace.length === 0 && !gameState[player].ready) && <button className="board__confirm" onClick={()=> {
