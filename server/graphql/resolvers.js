@@ -6,6 +6,7 @@ const pubsub = new PubSub();
 const serverMessage = { welcome: "Welcome to Caj's Cool Chatroom", goodbye: "Thanks for visiting!"}
 const messageArr = [];
 
+
 const gameState = {
   gameId: '1',
   activePlayer: '1',

@@ -7,7 +7,7 @@ const express = require('express');
 const typeDefs = require('./graphql/typedefs');
 const resolvers = require('./graphql/resolvers');
 
-const PORT = 1337;
+const PORT = process.env.PORT || 1337;
 //https://www.apollographql.com/docs/apollo-server/integrations/middleware/#swapping-out-apollo-server
 
 async function startServer () {

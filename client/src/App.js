@@ -14,6 +14,7 @@ function App() {
     <BrowserRouter>
     <Routes>
       <Route path="/login" element={<Login setPlayerId={setPlayerId} />}></Route>
+      {/* <Route path="/user" element={<Login setPlayerId={setPlayerId} />}></Route> */}
       <Route path="/" element={<InitializeGame playerId={playerId} />}></Route>
     </Routes>
     </BrowserRouter>
