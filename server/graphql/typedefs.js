@@ -51,8 +51,8 @@ const typeDefs = gql`
     sendMessage(name: String!, message: String!): chatMessage
     playMove(coords: [Int]!): Boolean
     placeAssets(assetsToPlace: [AssetToPlace]): Boolean
-    signup(user: User!): UserOut
-    login(user: User!): UserOut
+    signup(user: User): UserOut
+    login(user: User): UserOut
     createGame(playerId: String!): String!
     joinGame(playerId: String!, gameId: String!): Boolean
   }

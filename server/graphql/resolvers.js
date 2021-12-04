@@ -68,6 +68,7 @@ const resolvers = {
       });
 
       gamesArr[gameStateIndex] = joinNewGame(playerId, gameState);
+      return true;
     },
     sendMessage: (_, args) => {
       messageArr.push(args)

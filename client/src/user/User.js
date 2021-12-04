@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router';
 import { Link } from 'react-router-dom';
 import CreateGame from './CreateGame';
+import JoinGame from './JoinGame';
 
 
 function User({ setPlayerId, setGameId }) {
@@ -37,6 +38,7 @@ function User({ setPlayerId, setGameId }) {
     <div>
       <h1>Welcome {cookies.username}!</h1>
       <CreateGame playerId={cookies.playerId} setGameId={setGameId} />
+      <JoinGame playerId={cookies.playerId} setGameId={setGameId} />
       <button onClick={clearCookies}>Log Out</button>
       <p>GOTO GAME? <Link to="../">GAME</Link></p>
     </div>

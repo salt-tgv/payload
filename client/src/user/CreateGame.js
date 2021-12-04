@@ -9,14 +9,13 @@ function CreateGame({ playerId, setGameId }) {
     if (data)
       if (data.createGame) {
         setGameId(data.createGame);
-
+        console.log(data.createGame);
       } 
   }, [data])
 
   return(
     <div>
       <button onClick={() => createGameFunction({ variables: { playerId }})}>Create game</button>
-      <button>Join game</button>
     </div>
   )
 }
