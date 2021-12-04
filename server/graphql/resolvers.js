@@ -1,40 +1,40 @@
 const { PubSub, withFilter } = require('graphql-subscriptions');
-const generateBoard = require('../gameLogic/boardLogic');
 const { checkMove, updateAsset, updateRevealed, resolveMove, checkWin } = require('../gameLogic/moveLogic');
 const pubsub = new PubSub();
 
 const serverMessage = { welcome: "Welcome to Caj's Cool Chatroom", goodbye: "Thanks for visiting!"}
 const messageArr = [];
+const usersArr = [];
+const gamesArr = [];
 
-
-const gameState = {
-  gameId: '1',
-  activePlayer: '1',
-  inactivePlayer: '2',
-  winner: '',
-  player1: {
-    ready: false,
-  },
-  player2: {
-    ready: false,
-  },
-  board1: {
-    playerId: '1',
-    boardState: generateBoard(5, 'UNKNOWN'),
-  },
-  board2: {
-    playerId: '2',
-    boardState: generateBoard(5, 'UNKNOWN'),
-  },
-  asset1: {
-    playerId: '1',
-    assets: []
-  },
-  asset2: {
-    playerId: '2',
-    assets: []
-  }
-}
+// const gameState = {
+//   gameId: '1',
+//   activePlayer: '1',
+//   inactivePlayer: '2',
+//   winner: '',
+//   player1: {
+//     ready: false,
+//   },
+//   player2: {
+//     ready: false,
+//   },
+//   board1: {
+//     playerId: '1',
+//     boardState: generateBoard(5, 'UNKNOWN'),
+//   },
+//   board2: {
+//     playerId: '2',
+//     boardState: generateBoard(5, 'UNKNOWN'),
+//   },
+//   asset1: {
+//     playerId: '1',
+//     assets: []
+//   },
+//   asset2: {
+//     playerId: '2',
+//     assets: []
+//   }
+// }
 
 const resolvers = {
   Query: {
@@ -58,9 +58,32 @@ const resolvers = {
     }
   },
   Mutation: {
-    /** Login mutation */
-    /** Signup mutation */
+    signup: (_, { user }, context) => {
+      const foundUser = usersArr.find(userInArr => userInArr.username === user.username)
+      if (!foundUser) {
+        user.playerId = String(Date.now());
+        usersArr.push(user);
+        return { username: user.username, playerId: user.playerId };
+      }
+
+      return { error: 'User already exists!', username: 'error' };
+    },
+
+    login: (_, { user }, context) => {
+      const foundUser = usersArr.find(userInArr => userInArr.username === user.username)
+      if (foundUser) {
+        return { username: foundUser.username, playerId: foundUser.playerId };
+      }
+
+      return { error: 'User not found', username: 'error' };
+    },
     /** Create Game Mutation */
+    createGame: (_, { playerId }, context) => {
+      console.log(playerId);
+      const newGame = createNewGame(playerId);
+      gamesArr.push(newGame);
+      return newGame.gameId;
+    },
     /** Join Game Mutation */
     sendMessage: (_, args) => {
       messageArr.push(args)

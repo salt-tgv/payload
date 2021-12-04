@@ -1,3 +1,4 @@
+const cors = require('cors');
 const { ApolloServer } = require('apollo-server-express');
 const http = require('http');
 const { execute, subscribe } = require('graphql');
@@ -49,7 +50,12 @@ async function startServer () {
   
     await server.start();
     server.applyMiddleware({ app });
-  
+    
+    // app.use(express.static('../client/build'))
+    // app.get('*', (req, res) => {
+    //   res.sendFile('/Users/salt-dev/Documents/projects/final-project/client/build/index.html')
+    // })
+
     httpServer.listen(PORT, console.log('Server activated... 👽'));
   } catch(error) {
     console.error(error);
