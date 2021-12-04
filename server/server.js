@@ -27,7 +27,8 @@ async function startServer () {
         subscribe,
         onConnect: (connectionParams, socket) => {
           const playerId = connectionParams.playerId;
-          return { playerId };
+          const gameId = connectionParams.gameId
+          return { playerId, gameId };
         }}, 
       { server: httpServer, path: '/graphql' }
     );
@@ -35,7 +36,7 @@ async function startServer () {
     const server = new ApolloServer({
       schema,
       context: ({ req, res }) => {
-        return { playerId: req.headers.playerid, res }
+        return { playerId: req.headers.playerid, gameId: req.headers.gameid, res }
       },
       plugins: [{
         async serverWillStart() {

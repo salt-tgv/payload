@@ -21,4 +21,6 @@ const LOG_IN = gql`
   }
 `
 
-export { SIGN_UP, LOG_IN }
+
+
+export { SIGN_UP, LOG_IN };

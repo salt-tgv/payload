@@ -54,6 +54,7 @@ const typeDefs = gql`
     signup(user: User!): UserOut
     login(user: User!): UserOut
     createGame(playerId: String!): String!
+    joinGame(playerId: String!, gameId: String!): Boolean
   }
 
   type Subscription {

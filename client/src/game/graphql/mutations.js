@@ -7,8 +7,8 @@ const PLAY_MOVE = gql`
   }
 `
 const PLAYER_CONFIRM = gql`
-mutation($assetsToPlace: [AssetToPlace]) {
-  placeAssets(assetsToPlace: $assetsToPlace)
+  mutation($assetsToPlace: [AssetToPlace]) {
+    placeAssets(assetsToPlace: $assetsToPlace)
 }`
 
 export { 

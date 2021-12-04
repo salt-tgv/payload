@@ -19,6 +19,7 @@ function InitializeGame({ playerId, gameId }) {
       reconnect: true,
       connectionParams: {
         playerId,
+        gameId
       }
     }
   })
@@ -27,6 +28,7 @@ function InitializeGame({ playerId, gameId }) {
     uri: 'http://localhost:1337/graphql',
     headers: {
       playerid: playerId,
+      gameid: gameId
     }
   })
   

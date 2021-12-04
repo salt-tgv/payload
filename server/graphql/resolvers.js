@@ -1,4 +1,5 @@
 const { PubSub, withFilter } = require('graphql-subscriptions');
+const { createNewGame, joinNewGame } = require('../gameLogic/gameSetup');
 const { checkMove, updateAsset, updateRevealed, resolveMove, checkWin } = require('../gameLogic/moveLogic');
 const pubsub = new PubSub();
 
@@ -7,40 +8,12 @@ const messageArr = [];
 const usersArr = [];
 const gamesArr = [];
 
-// const gameState = {
-//   gameId: '1',
-//   activePlayer: '1',
-//   inactivePlayer: '2',
-//   winner: '',
-//   player1: {
-//     ready: false,
-//   },
-//   player2: {
-//     ready: false,
-//   },
-//   board1: {
-//     playerId: '1',
-//     boardState: generateBoard(5, 'UNKNOWN'),
-//   },
-//   board2: {
-//     playerId: '2',
-//     boardState: generateBoard(5, 'UNKNOWN'),
-//   },
-//   asset1: {
-//     playerId: '1',
-//     assets: []
-//   },
-//   asset2: {
-//     playerId: '2',
-//     assets: []
-//   }
-// }
-
 const resolvers = {
   Query: {
     serverMessages: () => (serverMessage),
     messages: () => messageArr,
     gameState: (parent, args, context, info) => {
+      const gameState = gamesArr.find(game => game.gameId === context.gameId);
       return {
         activePlayer: gameState.activePlayer,
         player1: gameState.player1,
@@ -51,6 +24,7 @@ const resolvers = {
       }
     },
     assets: (parent, args, context) => {
+      const gameState = gamesArr.find(game => game.gameId === context.gameId);
       if (context.playerId === gameState.asset1.playerId)
         return gameState.asset1;
       else if (context.playerId === gameState.asset2.playerId)
@@ -79,12 +53,22 @@ const resolvers = {
     },
     /** Create Game Mutation */
     createGame: (_, { playerId }, context) => {
-      console.log(playerId);
       const newGame = createNewGame(playerId);
       gamesArr.push(newGame);
       return newGame.gameId;
     },
     /** Join Game Mutation */
+    joinGame: (_, { gameId, playerId }, context) => {
+      let gameStateIndex;
+      const gameState = gamesArr.find((game, index) => {
+        if (game.gameId === gameId) {
+          gameStateIndex = index;
+          return true;
+        }
+      });
+
+      gamesArr[gameStateIndex] = joinNewGame(playerId, gameState);
+    },
     sendMessage: (_, args) => {
       messageArr.push(args)
       pubsub.publish('NEW_MESSAGE', { newMessage: args })
@@ -92,6 +76,7 @@ const resolvers = {
     },
     playMove: (parent, args, context) => {
       /** WARNING: gameState is a reference to gameState (pointer) */
+      const gameState = gamesArr.find(game => game.gameId === context.gameId);
       if (gameState.activePlayer === context.playerId) {
         const updatedAsset = resolveMove(gameState, args.coords, context.playerId);
         pubsub.publish('ASSET_UPDATE', { assetUpdate: updatedAsset })
@@ -111,6 +96,7 @@ const resolvers = {
       }
     },
     placeAssets: (parent, args, context) => {
+      const gameState = gamesArr.find(game => game.gameId === context.gameId);
       const { assetsToPlace } = args;
       const { playerId } = context;
       assetsToPlace.forEach(asset => {

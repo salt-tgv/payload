@@ -2,7 +2,7 @@ const generateBoard = require('../gameLogic/boardLogic');
 
 const createNewGame = (playerId, size = 5) => {
   const gameState = {
-    gameId: Date.now(),
+    gameId: String(Date.now()),
     activePlayer: playerId,
     inactivePlayer: '',
     winner: '',
@@ -33,4 +33,12 @@ const createNewGame = (playerId, size = 5) => {
   return gameState;
 }
 
-export default createNewGame;
+const joinNewGame = (playerId, gameState) => {
+  gameState.inactivePlayer = playerId;
+  gameState.board2.playerId = playerId;
+  gameState.asset2.playerId = playerId
+
+  return gameState;
+}
+
+module.exports = { createNewGame, joinNewGame };

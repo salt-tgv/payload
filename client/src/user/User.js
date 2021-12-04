@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router';
 import { Link } from 'react-router-dom';
+import CreateGame from './CreateGame';
 
 
 function User({ setPlayerId, setGameId }) {
@@ -21,8 +22,9 @@ function User({ setPlayerId, setGameId }) {
 
     setCookies(newCookies);
     setPlayerId(cookiePlayerId[2]);
-    // setGameId(0);
   }, [])
+
+  
 
   const clearCookies = () => {
     document.cookie = 'playerId=; Max-Age=-99999999';
@@ -34,8 +36,7 @@ function User({ setPlayerId, setGameId }) {
   return (
     <div>
       <h1>Welcome {cookies.username}!</h1>
-      <button>Create game</button>
-      <button>Join game</button>
+      <CreateGame playerId={cookies.playerId} setGameId={setGameId} />
       <button onClick={clearCookies}>Log Out</button>
       <p>GOTO GAME? <Link to="../">GAME</Link></p>
     </div>
