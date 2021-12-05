@@ -51,7 +51,7 @@ function InitializeGame({ playerId, gameId }) {
 
   return (
     <ApolloProvider client={client}>
-      <Game playerId={playerId}/>
+      <Game playerId={playerId} gameId={gameId} />
     </ApolloProvider>
   )
 }

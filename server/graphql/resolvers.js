@@ -7,6 +7,7 @@ const serverMessage = { welcome: "Welcome to Caj's Cool Chatroom", goodbye: "Tha
 const messageArr = [];
 const usersArr = [];
 const gamesArr = [];
+const finishedArr = [];
 
 const resolvers = {
   Query: {
@@ -67,7 +68,22 @@ const resolvers = {
         }
       });
 
+      if (!gameState) {
+        return false;
+      }
+
+      /** Publish game if join */
       gamesArr[gameStateIndex] = joinNewGame(playerId, gameState);
+      pubsub.publish(['GAME_UPDATE'], { gameUpdate: { 
+        player1: gameState.player1, 
+        player2: gameState.player2, 
+        board1: gameState.board1, 
+        board2: gameState.board2, 
+        gameId: gameState.gameId,
+        winner: gameState.winner,
+        activePlayer: gameState.activePlayer,
+      }})
+
       return true;
     },
     sendMessage: (_, args) => {
@@ -78,21 +94,24 @@ const resolvers = {
     playMove: (parent, args, context) => {
       /** WARNING: gameState is a reference to gameState (pointer) */
       const gameState = gamesArr.find(game => game.gameId === context.gameId);
-      if (gameState.activePlayer === context.playerId) {
+      if (gameState.activePlayer === context.playerId && !gameState.winner) {
         const updatedAsset = resolveMove(gameState, args.coords, context.playerId);
-        pubsub.publish('ASSET_UPDATE', { assetUpdate: updatedAsset })
+        pubsub.publish('ASSET_UPDATE', { assetUpdate: updatedAsset, gameUpdate: { gameId: gameState.gameId } })
         checkWin(gameState);
         gameState.activePlayer = gameState.inactivePlayer;
         gameState.inactivePlayer = context.playerId;
         pubsub.publish('GAME_UPDATE', { gameUpdate: { 
           player1: gameState.player1,
           player2: gameState.player2,
-          board1: gameState.board1, 
+          board1: gameState.board1,
+          gameId: gameState.gameId,
           board2: gameState.board2, 
           winner: gameState.winner, 
           activePlayer: gameState.activePlayer}});
         if (gameState.winner) {
-          console.log(`${gameState.winner} has won!`)
+          const gameIndex = gamesArr.findIndex(game => game.gameId === context.gameId);
+          finishedArr.push(gamesArr.splice(gameIndex, 1));
+          console.log(finishedArr);
         }
       }
     },
@@ -117,6 +136,7 @@ const resolvers = {
         player2: gameState.player2, 
         board1: gameState.board1, 
         board2: gameState.board2, 
+        gameId: gameState.gameId,
         winner: gameState.winner,
         activePlayer: gameState.activePlayer,
       }})
@@ -128,12 +148,21 @@ const resolvers = {
       subscribe: () => pubsub.asyncIterator(['NEW_MESSAGE']),
     },
     gameUpdate: {
-      subscribe: () => pubsub.asyncIterator(['GAME_UPDATE']),
+      subscribe: withFilter(
+        () => pubsub.asyncIterator(['GAME_UPDATE']),
+        ((payload, variables, context) => {
+          // console.log();
+          return payload.gameUpdate.gameId === context.gameId;
+        })
+      )
     },
     assetUpdate: {
       subscribe: withFilter(
         () => pubsub.asyncIterator(['ASSET_UPDATE']),
-        ((payload, variables, context) => (payload.assetUpdate.playerId === context.playerId))
+        ((payload, variables, context) => { 
+          return ((payload.assetUpdate.playerId === context.playerId) 
+          && payload.gameUpdate.gameId === context.gameId)
+        })
       )
     } 
   },

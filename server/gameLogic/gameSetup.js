@@ -34,9 +34,11 @@ const createNewGame = (playerId, size = 5) => {
 }
 
 const joinNewGame = (playerId, gameState) => {
-  gameState.inactivePlayer = playerId;
-  gameState.board2.playerId = playerId;
-  gameState.asset2.playerId = playerId
+  if (!gameState.board2.playerId) {
+    gameState.inactivePlayer = playerId;
+    gameState.board2.playerId = playerId;
+    gameState.asset2.playerId = playerId
+  }
 
   return gameState;
 }

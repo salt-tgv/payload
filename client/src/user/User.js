@@ -9,11 +9,19 @@ function User({ setPlayerId, setGameId }) {
   const [cookies, setCookies] = useState({ username: '', playerId: '' });
   const navigate = useNavigate();
 
+  const clearCookies = () => {
+    document.cookie = 'playerId=; Max-Age=-99999999';
+    document.cookie = 'username=; Max-Age=-99999999';
+    setCookies({ username: '', playerId: ''});
+    navigate('../login');
+  }
 
   useEffect(() => {
     const cookiePlayerId = document.cookie.match(/(playerId)=(\d+)/) || '';
     const cookieUsername = document.cookie.match(/(username)=(\w+)/) || '';
-    if (!cookiePlayerId[1] && !cookiePlayerId[2]) {
+    if (!cookiePlayerId[1] || !cookiePlayerId[2]) {
+      /** Check against database/query if sessionID matches with username in usersArr */
+      clearCookies();
       return navigate('../login');
     }
 
@@ -27,12 +35,7 @@ function User({ setPlayerId, setGameId }) {
 
   
 
-  const clearCookies = () => {
-    document.cookie = 'playerId=; Max-Age=-99999999';
-    document.cookie = 'username=; Max-Age=-99999999';
-    setCookies({ username: '', playerId: ''});
-    navigate('../login');
-  }
+  
  
   return (
     <div>
@@ -40,7 +43,6 @@ function User({ setPlayerId, setGameId }) {
       <CreateGame playerId={cookies.playerId} setGameId={setGameId} />
       <JoinGame playerId={cookies.playerId} setGameId={setGameId} />
       <button onClick={clearCookies}>Log Out</button>
-      <p>GOTO GAME? <Link to="../">GAME</Link></p>
     </div>
   )
 }

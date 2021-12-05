@@ -1,14 +1,17 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useQuery } from '@apollo/client'
 import { GET_BOARDS, SUBSCRIBE_BOARDS} from './graphql/queries';
 import OppBoard from './components/OppBoard';
 import MyBoard from './components/MyBoard';
 import PlacementBoard from './components/PlacementBoard';
+import { useNavigate } from 'react-router';
 
 
-function Game({ playerId }) {
+function Game({ playerId, gameId }) {
   const { subscribeToMore, loading, error, data } = useQuery(GET_BOARDS);
-  
+  const [gameOver, setGameOver] = useState('');
+  const navigate = useNavigate();
+
   useEffect(() => {
     subscribeToMore({
       document: SUBSCRIBE_BOARDS,
@@ -25,9 +28,9 @@ function Game({ playerId }) {
   
   const { gameState } = data;
   const { winner } = gameState;
-  if (winner) {
+  if (winner && !gameOver) {
     let gameEndMsg = winner === playerId ? 'You have won!' : 'Sorry bro...';
-    alert(gameEndMsg);
+    setGameOver(gameEndMsg);
   }
   const myBoard = (playerId === gameState.board1.playerId) ? gameState.board1 : gameState.board2;
   const oppBoard = (playerId !== gameState.board1.playerId) ? gameState.board1 : gameState.board2;
@@ -35,16 +38,23 @@ function Game({ playerId }) {
   const isMyTurn = (playerId === gameState.activePlayer)
 
   const areBothReady = (gameState.player1.ready && gameState.player2.ready);
+  const allJoined = (gameState.board2.playerId);
 
   const playBoards = <>
-    <OppBoard boardState={oppBoard.boardState} isMyTurn={isMyTurn}/>
+    <OppBoard boardState={oppBoard.boardState} isMyTurn={isMyTurn} winner={gameState.winner}/>
     <MyBoard boardState={myBoard.boardState}/>
   </>;
 
 
   return (
     <div className="App">
-      {areBothReady ? playBoards : <PlacementBoard gameState={gameState} playerId={playerId}/>}
+      { gameOver && 
+        <>
+        <h1>{gameOver}</h1> 
+        <button onClick={() => navigate('../user')}>Exit</button>
+        </>}
+      { !allJoined && <h1>{gameId}</h1>}
+      {areBothReady ? playBoards : allJoined && <PlacementBoard gameState={gameState} playerId={playerId}/>}
     </div>
   );
 }
