@@ -6,6 +6,7 @@ import {
 } from "react-router-dom";
 import Login from './login/Login'
 import InitializeGame from './game/InitializeGame'
+import './app.css'
 
 function App() {
   const [playerId, setPlayerId] = useState('');

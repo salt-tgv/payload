@@ -1,3 +1,13 @@
+svg {
+  line-height: 0;
+  margin: 0;
+}
+
+div {
+  margin: 0;
+  line-height: 0;
+}
+
 .board__cell--unknown {
   height: 50px;
   width: 50px;
@@ -44,4 +54,19 @@
   height: 50px;
   width: 50px;
   border: 1px solid rgb(255, 255, 255);
+}
+
+.cell {
+  height: 8vmin;
+  width: 8vmin;
+  margin: -1px -1px 0 0;
+}
+
+.asset-container {
+  height: 100%;
+  width: 100%;
+  position: relative;
+  bottom: 12vmin;
+  right: 4vmin;
+  pointer-events: none;
 }

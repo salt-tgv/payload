@@ -4,6 +4,7 @@ import { GET_BOARDS, SUBSCRIBE_BOARDS} from './graphql/queries';
 import OppBoard from './components/OppBoard';
 import MyBoard from './components/MyBoard';
 import PlacementBoard from './components/PlacementBoard';
+import './game.css';
 
 
 function Game({ playerId }) {
@@ -36,10 +37,10 @@ function Game({ playerId }) {
 
   const areBothReady = (gameState.player1.ready && gameState.player2.ready);
 
-  const playBoards = <>
+  const playBoards = <div className="board-wrapper">
     <OppBoard boardState={oppBoard.boardState} isMyTurn={isMyTurn}/>
     <MyBoard boardState={myBoard.boardState}/>
-  </>;
+  </div>;
 
 
   return (
