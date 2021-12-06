@@ -2,10 +2,12 @@ import './PlayCell.css';
 import { useMutation } from '@apollo/client';
 import { useState } from 'react';
 import { PLAY_MOVE } from '../graphql/mutations';
+import { dbRed, dbGreen, serverGreen, serverRed } from '../graphics/assets';
+import { cellGradientWhite, cellGradientGreen, cellGradientRed, cellSolidGreen, cellSolidRed} from '../graphics/cells';
 
 function PlayCell ({ cellData, x, y, active, assetType }) {
 
-  const [hoverClass, setHoverClass] = useState('');
+  const [isHovering, setIsHovering] = useState(false);
 
   const [playMove] = useMutation(PLAY_MOVE);
   const handleClick = (active && cellData === 'UNKNOWN')
@@ -13,50 +15,79 @@ function PlayCell ({ cellData, x, y, active, assetType }) {
       playMove({variables: {coords: [x,y]}})
     }
     : null
-  const cellClass = () => { 
+
+  const graphics = () => { 
     if (assetType) {
       if (/DESTROYED/.test(assetType)){
-        return 'board__cell--destroyed'
+        const myAsset = /DB/i.test(assetType) ? <div className="asset-container">{dbRed}</div> : <div className="asset-container">{serverGreen}</div>;
+        return (<>
+          {cellSolidRed}
+          {myAsset}
+        </>)
       }
-      return 'board__cell--asset';
+      const myAsset = /DB/i.test(assetType) ? <div className="asset-container">{dbGreen}</div> : <div className="asset-container">{serverGreen}</div>;
+      return (<>
+        {cellSolidGreen}
+        {myAsset}
+      </>)
     }
 
     switch(cellData) {
       case 'UNKNOWN':
-        return "board__cell--unknown";
+        return isHovering ? cellSolidGreen : cellGradientGreen;
       case 'MISS':
-        return "board__cell--miss";
+        return cellGradientRed;
       case 'HIT':
-        return "board__cell--hit";
+        return cellSolidRed;
       case 'DB':
-        return "board__cell--revealed";
+        return <>{cellSolidRed}{<div className="asset-container">{dbRed}</div>}</>;
       case 'SERVER':
-        return "board__cell--revealed";
+        return <>{cellSolidRed}{<div className="asset-container">{serverRed}</div>}</>;
     }
   }
 
+  // const cellClass = () => {
+  //   if (assetType) {
+  //     if (/DESTROYED/.test(assetType)){
+  //       return 'board__cell--destroyed'
+  //     }
+  //     return 'board__cell--asset';
+  //   }
+
+  //   switch(cellData) {
+  //     case 'UNKNOWN':
+  //       return "board__cell--unknown";
+  //     case 'MISS':
+  //       return "board__cell--miss";
+  //     case 'HIT':
+  //       return "board__cell--hit";
+  //     case 'DB':
+  //       return "board__cell--revealed";
+  //     case 'SERVER':
+  //       return "board__cell--revealed";
+  //   }
+  // }
+
   const handleMouseEnter = () => {
-    setHoverClass('board__cell--hover');
+    setIsHovering(true);
   }
 
   const handleMouseLeave = () => {
-    setHoverClass('');
+    setIsHovering(false);
   }
 
-  const cellClassList = `${cellClass()} ${hoverClass}`
+  // const cellClassList = `${cellClass()} ${hoverClass}`
+  const graphicsToRender = graphics()
 
   return (
-    <div>
-      <div 
-        className={cellClassList} 
-        id={`${x},${y}`}
-        onClick={handleClick}
-        onMouseEnter={active ? handleMouseEnter : () => {}}
-        onMouseLeave={active ? handleMouseLeave : () => {}}>
-      </div>
-      <div>
-
-      </div>
+    <div 
+      // className={cellClassList} 
+      className="cell"
+      id={`${x},${y}`}
+      onClick={handleClick}
+      onMouseEnter={active ? handleMouseEnter : () => {}}
+      onMouseLeave={active ? handleMouseLeave : () => {}}>
+        {graphicsToRender}
     </div>
   )
 }

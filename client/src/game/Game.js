@@ -5,7 +5,7 @@ import OppBoard from './components/OppBoard';
 import MyBoard from './components/MyBoard';
 import PlacementBoard from './components/PlacementBoard';
 import { useNavigate } from 'react-router';
-
+import './game.css';
 
 function Game({ playerId, gameId }) {
   const { subscribeToMore, loading, error, data } = useQuery(GET_BOARDS);
@@ -40,10 +40,10 @@ function Game({ playerId, gameId }) {
   const areBothReady = (gameState.player1.ready && gameState.player2.ready);
   const allJoined = (gameState.board2.playerId);
 
-  const playBoards = <>
+  const playBoards = <div className="board-wrapper">
     <OppBoard boardState={oppBoard.boardState} isMyTurn={isMyTurn} winner={gameState.winner}/>
     <MyBoard boardState={myBoard.boardState}/>
-  </>;
+  </div>;
 
 
   return (

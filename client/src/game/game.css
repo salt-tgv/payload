@@ -1,0 +1,14 @@
+.board-wrapper {
+    display: flex;
+    transform: rotate(45deg) rotate3d(1, -1, 0, 45deg);
+    gap: 30vmin;
+    margin: 10vmin 0 0 20vmin;
+    width: 500px;
+}
+
+.board-contents {
+    display: flex;
+    flex-direction: column;
+    width: 200px;
+    flex-grow: 1;
+}
