@@ -1,6 +1,6 @@
 import './PlayCell.css'
 import { cellGradientGreen, cellSolidGreen, cellGradientWhite } from '../graphics/cells';
-import { serverGreen } from '../graphics/assets'
+import { serverGreen, dbGreen } from '../graphics/assets'
 
 function PlacementCell ({cellData, onClickCb, onEnterCb, onLeaveCb, x, y, activeAssetIndex}) {
   // let cellClass = (cellData.asset !== 'NONE') ? "board__cell--miss" : "board__cell--unknown";
@@ -16,7 +16,8 @@ function PlacementCell ({cellData, onClickCb, onEnterCb, onLeaveCb, x, y, active
     {hasAsset && cellSolidGreen}
     {(!hasAsset && isHovered) && cellSolidGreen}
     {(!hasAsset && !isHovered) && cellGradientGreen}
-    {hasAsset && <div className="asset-container">{serverGreen}</div>}
+    {cellData.asset === 'SERVER' && <div className="asset-container">{serverGreen}</div>}
+    {cellData.asset === 'DB' && <div className="asset-container">{dbGreen}</div>}
     </div>)
 }
 

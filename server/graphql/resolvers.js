@@ -1,6 +1,7 @@
 const { PubSub, withFilter } = require('graphql-subscriptions');
 const { createNewGame, joinNewGame } = require('../gameLogic/gameSetup');
 const { checkMove, updateAsset, updateRevealed, resolveMove, checkWin } = require('../gameLogic/moveLogic');
+const { generateHash, compareHash } = require('../authentication/authentication');
 const pubsub = new PubSub();
 
 const serverMessage = { welcome: "Welcome to Caj's Cool Chatroom", goodbye: "Thanks for visiting!"}
@@ -30,13 +31,36 @@ const resolvers = {
         return gameState.asset1;
       else if (context.playerId === gameState.asset2.playerId)
         return gameState.asset2;
-    }
+    },
+    activeGames: (parent, args, context) => {
+      const activeGames = gamesArr.filter(game => {
+        if ((game.board1.playerId === args.playerId) || (game.board2.playerId === args.playerId)) {
+          return true;
+        }
+
+        return false;
+      })
+
+      return activeGames;
+    },
+    validateUser: (parent,{username, playerId}, context) => {
+      const foundUser = usersArr.find(userInArr => userInArr.username === username);
+      if (!foundUser) {
+        return false;
+      }
+      if (foundUser.playerId === playerId) {
+        return true;
+      }
+      return false;
+    },
   },
   Mutation: {
-    signup: (_, { user }, context) => {
+    signup: async (_, { user }, context) => {
       const foundUser = usersArr.find(userInArr => userInArr.username === user.username)
       if (!foundUser) {
+        const hash = await generateHash(user.password);
         user.playerId = String(Date.now());
+        user.password = hash;
         usersArr.push(user);
         return { username: user.username, playerId: user.playerId };
       }
@@ -44,10 +68,13 @@ const resolvers = {
       return { error: 'User already exists!', username: 'error' };
     },
 
-    login: (_, { user }, context) => {
+    login: async (_, { user }, context) => {
       const foundUser = usersArr.find(userInArr => userInArr.username === user.username)
       if (foundUser) {
-        return { username: foundUser.username, playerId: foundUser.playerId };
+        if (await compareHash(user.password, foundUser.password)){
+          return { username: foundUser.username, playerId: foundUser.playerId };
+        }
+        return { error: 'Wrong password', username: 'error' }; 
       }
 
       return { error: 'User not found', username: 'error' };
@@ -111,7 +138,6 @@ const resolvers = {
         if (gameState.winner) {
           const gameIndex = gamesArr.findIndex(game => game.gameId === context.gameId);
           finishedArr.push(gamesArr.splice(gameIndex, 1));
-          console.log(finishedArr);
         }
       }
     },
@@ -151,7 +177,6 @@ const resolvers = {
       subscribe: withFilter(
         () => pubsub.asyncIterator(['GAME_UPDATE']),
         ((payload, variables, context) => {
-          // console.log();
           return payload.gameUpdate.gameId === context.gameId;
         })
       )

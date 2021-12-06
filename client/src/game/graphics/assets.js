@@ -1,5 +1,5 @@
 export const dbGreen = 
-    <svg xmlns="http://www.w3.org/2000/svg" width="150%" height="150%" viewBox="0 0 150 150">
+    <svg xmlns="http://www.w3.org/2000/svg" width="150%" height="150%" viewBox="0 0 150 150" className="asset-svg">
         <g>
             <rect width="150" height="150" fill="none"/>
             <circle cx="85.86" cy="85.86" r="40" transform="translate(-35.56 85.86) rotate(-45)" fill="#56c993"/>
@@ -15,7 +15,7 @@ export const dbGreen =
     </svg>
 
 export const dbRed = 
-    <svg xmlns="http://www.w3.org/2000/svg" width="150%" height="150%" viewBox="0 0 150 150">
+    <svg xmlns="http://www.w3.org/2000/svg" width="150%" height="150%" viewBox="0 0 150 150" className="asset-svg">
     <g>
         <rect width="150" height="150" fill="none"/>
         <circle cx="85.86" cy="85.86" r="40" transform="translate(-35.56 85.86) rotate(-45)" fill="#c95656"/>
@@ -31,7 +31,7 @@ export const dbRed =
     </svg>
 
 export const serverGreen = 
-    <svg xmlns="http://www.w3.org/2000/svg" width="150%" height="150%" viewBox="0 0 150 150">
+    <svg xmlns="http://www.w3.org/2000/svg" width="150%" height="150%" viewBox="0 0 150 150" className="asset-svg">
     <g>
         <rect width="150" height="150" fill="none"/>
         <polygon points="45 90 45 10 95 60 95 140 45 90" fill="#89c9ab"/>
@@ -48,7 +48,7 @@ export const serverGreen =
     </svg>
 
 export const serverRed =
-    <svg xmlns="http://www.w3.org/2000/svg" width="150%" height="150%" viewBox="0 0 150 150">
+    <svg xmlns="http://www.w3.org/2000/svg" width="150%" height="150%" viewBox="0 0 150 150" className="asset-svg">
     <g>
         <rect width="150" height="150" fill="none"/>
         <polygon points="45 90 45 10 95 60 95 140 45 90" fill="#c98989"/>

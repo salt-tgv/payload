@@ -1,12 +1,20 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router';
 import { Link } from 'react-router-dom';
+import { useQuery } from '@apollo/client'
 import CreateGame from './CreateGame';
 import JoinGame from './JoinGame';
+import ActiveGames from './ActiveGames';
+import { VALIDATE_USER } from './graphql/queries';
 
 
 function User({ setPlayerId, setGameId }) {
-  const [cookies, setCookies] = useState({ username: '', playerId: '' });
+  const cookiePlayerIdGroups = document.cookie.match(/(playerId)=(\d+)/);
+  const cookiePlayerId = cookiePlayerIdGroups ? cookiePlayerIdGroups[2] : '';
+  const cookieUsernameGroups = document.cookie.match(/(username)=(\w+)/);
+  const cookieUsername = cookieUsernameGroups ? cookieUsernameGroups[2] : '';
+  const [cookies, setCookies] = useState({ username: cookieUsername, playerId: cookiePlayerId });
+  const { data, loading, error } = useQuery(VALIDATE_USER, { variables: { username: cookieUsername, playerId: cookiePlayerId } });
   const navigate = useNavigate();
 
   const clearCookies = () => {
@@ -17,33 +25,37 @@ function User({ setPlayerId, setGameId }) {
   }
 
   useEffect(() => {
-    const cookiePlayerId = document.cookie.match(/(playerId)=(\d+)/) || '';
-    const cookieUsername = document.cookie.match(/(username)=(\w+)/) || '';
-    if (!cookiePlayerId[1] || !cookiePlayerId[2]) {
-      /** Check against database/query if sessionID matches with username in usersArr */
-      clearCookies();
-      return navigate('../login');
+    if (data) {
+      console.log(data);
+      if (!data.validateUser) {
+        clearCookies();
+        return;
+      }
+
+      return;
     }
 
     const newCookies = {};
-    newCookies[cookiePlayerId[1]] = cookiePlayerId[2];
-    newCookies[cookieUsername[1]] = cookieUsername[2];
+    newCookies.playerId = cookiePlayerId;
+    newCookies.username = cookieUsername;
 
     setCookies(newCookies);
-    setPlayerId(cookiePlayerId[2]);
-  }, [])
-
-  
-
-  
+    setPlayerId(cookiePlayerId);
+  }, [data])
  
   return (
-    <div>
+    <>
+    { loading && <div><h3>Loading</h3></div>} 
+    { error && <h3>Error :(</h3> }
+    { data && data.validateUser && <div>
       <h1>Welcome {cookies.username}!</h1>
       <CreateGame playerId={cookies.playerId} setGameId={setGameId} />
       <JoinGame playerId={cookies.playerId} setGameId={setGameId} />
       <button onClick={clearCookies}>Log Out</button>
+      <ActiveGames playerId={cookies.playerId} setGameId={setGameId}/>
     </div>
+    }
+    </>
   )
 }
 

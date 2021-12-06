@@ -10,6 +10,7 @@ function PlayCell ({ cellData, x, y, active, assetType }) {
   const [isHovering, setIsHovering] = useState(false);
 
   const [playMove] = useMutation(PLAY_MOVE);
+
   const handleClick = (active && cellData === 'UNKNOWN')
     ? (e) => {
       playMove({variables: {coords: [x,y]}})
@@ -19,7 +20,7 @@ function PlayCell ({ cellData, x, y, active, assetType }) {
   const graphics = () => { 
     if (assetType) {
       if (/DESTROYED/.test(assetType)){
-        const myAsset = /DB/i.test(assetType) ? <div className="asset-container">{dbRed}</div> : <div className="asset-container">{serverGreen}</div>;
+        const myAsset = /DB/i.test(assetType) ? <div className="asset-container">{dbRed}</div> : <div className="asset-container">{serverRed}</div>;
         return (<>
           {cellSolidRed}
           {myAsset}
@@ -36,7 +37,7 @@ function PlayCell ({ cellData, x, y, active, assetType }) {
       case 'UNKNOWN':
         return isHovering ? cellSolidGreen : cellGradientGreen;
       case 'MISS':
-        return cellGradientRed;
+        return cellGradientWhite;
       case 'HIT':
         return cellSolidRed;
       case 'DB':

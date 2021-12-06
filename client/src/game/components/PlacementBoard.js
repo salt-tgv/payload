@@ -1,5 +1,5 @@
 import { generatePlacementBoard, boardGenerator } from '../gameLogic/boardLogic';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useMutation } from '@apollo/client';
 import PlacementInventory from './PlacementInventory';
 import PlacedInventory from './PlacedInventory';
@@ -10,7 +10,7 @@ import { placementText } from '../graphics/text';
 const assetList = [
   {
     cells: [],
-    type: 'DB',
+    type: 'SERVER',
     size: 3,
     vertical: true,
   },
@@ -34,11 +34,18 @@ const initialCellValue = {
 }
 
 function PlacementBoard ({ gameState, playerId }) {
-const [assetsToPlace, setAssetsToPlace] = useState(assetList);
+const [assetsToPlace, setAssetsToPlace] = useState(assetList.map(asset => ({...asset, cells: []})));
 const [placedAssets, setPlacedAssets] = useState([]);
 const [activeAssetIndex, setActiveAssetIndex] = useState(-1);
 const [placementBoardState, setPlacementBoardState] = useState(boardGenerator(5, initialCellValue));
 const [playerConfirm] = useMutation(PLAYER_CONFIRM);
+
+// useEffect(() => {
+//   setPlacedAssets([])
+//   return () => {
+//     setPlacedAssets([])
+//   }
+//   }, []);
 
 const onClickCb = (x, y, cellData) => {
   if(activeAssetIndex !== -1){
@@ -147,8 +154,9 @@ return (
         <PlacementInventory assets={assetsToPlace} setAssets={setAssetsToPlace} activeAssetIndex={activeAssetIndex} setActiveAssetIndex={setActiveAssetIndex}/>
         {generatePlacementBoard(placementBoardState, onClickCb, onEnterCb, onLeaveCb)}
         <PlacedInventory assets={placedAssets} resetPlacedAsset={resetPlacedAsset} />
-        {(assetsToPlace.length === 0 && !gameState[player].ready) && <button className="board__confirm" onClick={()=> {
-          playerConfirm({ variables: { assetsToPlace: placedAssets.map(asset => ({cells: asset.cells, type: asset.type})) }})
+        {(assetsToPlace.length === 0 && !gameState[player].ready) &&<button className="board__confirm" onClick={()=> {
+          playerConfirm({ variables: { assetsToPlace: placedAssets.map(asset => ({cells: asset.cells, type: asset.type})) }});
+          console.log(placedAssets);
         }}>CONFIRM!</button>}
         {(assetsToPlace.length === 0 && gameState[player].ready) && <h2>Waiting for your slow opponent...</h2>}
       </div>

@@ -24,6 +24,8 @@ const typeDefs = gql`
     messages: [chatMessage]
     gameState: gameState
     assets: assets
+    activeGames (playerId: String!): [gameState]
+    validateUser(username: String!, playerId: String!): Boolean
   }
 
   type chatMessage {
@@ -73,6 +75,7 @@ const typeDefs = gql`
   }
 
   type gameState {
+    gameId: String
     activePlayer: String!
     winner: String!
     player1: Player!

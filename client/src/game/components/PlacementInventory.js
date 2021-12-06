@@ -3,6 +3,7 @@ import './PlacementInventory.css';
 
 function PlacementInventory ({ assets, setAssets, activeAssetIndex, setActiveAssetIndex }) {
   const [placeVertically, setPlaceVertically] = useState(true);
+  const [isDatabase, setIsDatabase] = useState(true);
   const inventoryList = assets.map((asset, index) => {
     return <button 
     className={index === activeAssetIndex ? "placement-inventory__button--active" : "placement-inventory__button"}
@@ -17,7 +18,15 @@ function PlacementInventory ({ assets, setAssets, activeAssetIndex, setActiveAss
       newAssets.forEach(asset => asset.vertical = placeVertically);
       setAssets(newAssets);
     }
-  }, [placeVertically, assets])
+    if(!assets.every(asset => asset.type === 'DB') && isDatabase) {
+      const newAssets = [...assets];
+      newAssets.forEach(asset => asset.type = 'DB');
+    }
+    if(!assets.every(asset => asset.type === 'SERVER') && !isDatabase) {
+      const newAssets = [...assets];
+      newAssets.forEach(asset => asset.type = 'SERVER');
+    }
+  }, [placeVertically, isDatabase, assets])
   
   return (
     <div className="inventory-wrapper">
@@ -26,6 +35,7 @@ function PlacementInventory ({ assets, setAssets, activeAssetIndex, setActiveAss
       </div>
       <div>
         <button onClick={() => setPlaceVertically(!placeVertically)}>{placeVertically ? 'Vertical' : 'Horizontal'}</button>
+        <button onClick={() => setIsDatabase(!isDatabase)}>{isDatabase ? 'Database' : 'Server'}</button>
       </div>
     </div>
   )

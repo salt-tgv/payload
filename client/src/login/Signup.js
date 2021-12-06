@@ -7,13 +7,26 @@ import { Link } from 'react-router-dom';
 
 function Signup() {
   const [signUpFunction, { data, loading, error }] = useMutation(SIGN_UP);
-  const [textInput, setTextInput] = useState('');
+  const [credentialsInput, setCredentialsInput] = useState({});
   
   const navigate = useNavigate();
 
+  const handleInput = (e) => {
+    const newCredentials = {...credentialsInput};
+    if (e.target.id === 'username') {
+      newCredentials.username = e.target.value;
+    }
+
+    if (e.target.id === 'password') {
+      newCredentials.password = e.target.value;
+    }
+
+    setCredentialsInput(newCredentials);
+  }
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    signUpFunction({ variables: { user: { username: textInput, password: '123' }}});
+    signUpFunction({ variables: { user: { username: credentialsInput.username, password: credentialsInput.password }}});
   }
   
   useEffect(() => {
@@ -31,7 +44,8 @@ function Signup() {
   return (
     <div>
       <form onSubmit={handleSubmit}>
-        <input type="text" placeholder="username" value={textInput} onChange={(e) => setTextInput(e.target.value)}></input>
+        <input type="text" placeholder="username" id="username" value={credentialsInput.username} onChange={handleInput}></input>
+        <input type="password" placeholder="password" id="password" value={credentialsInput.password} onChange={handleInput}></input>
         <input type="submit" value="Signup" />
         <p>Already have an account? <Link to="../login">Login</Link></p>
       </form>
