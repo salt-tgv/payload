@@ -1,3 +1,4 @@
+const cors = require('cors');
 const { ApolloServer } = require('apollo-server-express');
 const http = require('http');
 const { execute, subscribe } = require('graphql');
@@ -26,7 +27,8 @@ async function startServer () {
         subscribe,
         onConnect: (connectionParams, socket) => {
           const playerId = connectionParams.playerId;
-          return { playerId };
+          const gameId = connectionParams.gameId
+          return { playerId, gameId };
         }}, 
       { server: httpServer, path: '/graphql' }
     );
@@ -34,7 +36,7 @@ async function startServer () {
     const server = new ApolloServer({
       schema,
       context: ({ req, res }) => {
-        return { playerId: req.headers.playerid, res }
+        return { playerId: req.headers.playerid, gameId: req.headers.gameid, res }
       },
       plugins: [{
         async serverWillStart() {
@@ -49,7 +51,12 @@ async function startServer () {
   
     await server.start();
     server.applyMiddleware({ app });
-  
+    
+    // app.use(express.static('../client/build'))
+    // app.get('*', (req, res) => {
+    //   res.sendFile('/Users/salt-dev/Documents/projects/final-project/client/build/index.html')
+    // })
+
     httpServer.listen(PORT, console.log('Server activated... 👽'));
   } catch(error) {
     console.error(error);

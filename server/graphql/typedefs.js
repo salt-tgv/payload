@@ -36,10 +36,25 @@ const typeDefs = gql`
     type: assetType!
   }
 
+  input User {
+    username: String
+    password: String
+  }
+
+  type UserOut {
+    username: String
+    playerId: String
+    error: String
+  }
+
   type Mutation {
     sendMessage(name: String!, message: String!): chatMessage
     playMove(coords: [Int]!): Boolean
     placeAssets(assetsToPlace: [AssetToPlace]): Boolean
+    signup(user: User): UserOut
+    login(user: User): UserOut
+    createGame(playerId: String!): String!
+    joinGame(playerId: String!, gameId: String!): Boolean
   }
 
   type Subscription {
