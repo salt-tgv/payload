@@ -3,7 +3,7 @@ import { PLAY_MOVE } from '../graphql/mutations';
 import { generatePlayBoard } from '../gameLogic/boardLogic';
 import './Board.css';
 
-function OppBoard ({ boardState, isMyTurn }) {
+function OppBoard ({ boardState, isMyTurn, winner }) {
 
   return (
     <div className="board">

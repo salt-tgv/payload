@@ -6,11 +6,11 @@ import { getMainDefinition } from '@apollo/client/utilities';
 import { WebSocketLink } from '@apollo/client/link/ws';
 import Game from './Game';
 
-function InitializeGame({ playerId }) {
+function InitializeGame({ playerId, gameId }) {
   const navigate = useNavigate();
   useEffect(() => {
-    if (!playerId)
-      navigate('../login');
+    if (!playerId || !gameId)
+      navigate('../user');
   }, [])
 
   const wsLink = new WebSocketLink({
@@ -19,6 +19,7 @@ function InitializeGame({ playerId }) {
       reconnect: true,
       connectionParams: {
         playerId,
+        gameId
       }
     }
   })
@@ -27,6 +28,7 @@ function InitializeGame({ playerId }) {
     uri: 'http://localhost:1337/graphql',
     headers: {
       playerid: playerId,
+      gameid: gameId
     }
   })
   
@@ -49,7 +51,7 @@ function InitializeGame({ playerId }) {
 
   return (
     <ApolloProvider client={client}>
-      <Game playerId={playerId}/>
+      <Game playerId={playerId} gameId={gameId} />
     </ApolloProvider>
   )
 }
