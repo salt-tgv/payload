@@ -1,12 +1,12 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router';
 import { Link } from 'react-router-dom';
-import { useQuery } from '@apollo/client'
+import { useQuery, useMutation } from '@apollo/client'
 import CreateGame from './CreateGame';
 import JoinGame from './JoinGame';
 import ActiveGames from './ActiveGames';
 import { VALIDATE_USER } from './graphql/queries';
-
+import { JOIN_GAME } from './graphql/mutations';
 
 function User({ setPlayerId, setGameId }) {
   const cookiePlayerIdGroups = document.cookie.match(/(playerId)=(\d+)/);
@@ -17,6 +17,7 @@ function User({ setPlayerId, setGameId }) {
   const cookieGameToJoin = cookieGameToJoinGroups ? cookieGameToJoinGroups[2] : '';
 
   const [cookies, setCookies] = useState({ username: cookieUsername, playerId: cookiePlayerId });
+  const [joinGameFunction, { data: joinData }] = useMutation(JOIN_GAME);
   const { data, loading, error } = useQuery(VALIDATE_USER, { variables: { username: cookieUsername, playerId: cookiePlayerId } });
   const navigate = useNavigate();
 
@@ -30,7 +31,6 @@ function User({ setPlayerId, setGameId }) {
 
   useEffect(() => {
     if (data) {
-      console.log(data);
       if (!data.validateUser) {
         clearCookies();
         return;
@@ -47,11 +47,10 @@ function User({ setPlayerId, setGameId }) {
     setPlayerId(cookiePlayerId);
 
     if (cookieGameToJoin) {
-      
+      joinGameFunction({ variables: {playerId: cookiePlayerId, gameId: cookieGameToJoin }});
       document.cookie = 'gameToJoin=; Max-Age=-99999999';
       setGameId(cookieGameToJoin);
       navigate('../');
-      
     }
     
   }, [data])
