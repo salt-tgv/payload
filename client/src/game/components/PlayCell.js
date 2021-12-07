@@ -3,7 +3,8 @@ import { useMutation } from '@apollo/client';
 import { useState } from 'react';
 import { PLAY_MOVE } from '../graphql/mutations';
 import { dbRed, dbGreen, serverGreen, serverRed } from '../graphics/assets';
-import { cellGradientWhite, cellGradientGreen, cellGradientRed, cellSolidGreen, cellSolidRed} from '../graphics/cells';
+import { cellGradientWhite, cellGradientGreen, cellSolidGreen, cellSolidRed} from '../graphics/cells';
+import { explode } from './fx/explosion';
 
 function PlayCell ({ cellData, x, y, active, assetType }) {
 

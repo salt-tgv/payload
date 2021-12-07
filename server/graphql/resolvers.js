@@ -1,6 +1,6 @@
 const { PubSub, withFilter } = require('graphql-subscriptions');
 const { createNewGame, joinNewGame } = require('../gameLogic/gameSetup');
-const { checkMove, updateAsset, updateRevealed, resolveMove, checkWin } = require('../gameLogic/moveLogic');
+const { resolveMove, checkWin } = require('../gameLogic/moveLogic');
 const { generateHash, compareHash } = require('../authentication/authentication');
 const pubsub = new PubSub();
 
@@ -56,6 +56,12 @@ const resolvers = {
       }
       return false;
     },
+    validGame: async(parent, { gameId }, context) => {
+      const gameFound = await context.db 
+        .collection('ActiveGames')
+        .findOne({ gameId });
+      return gameFound ? true : false;
+    },
   },
   Mutation: {
     signup: async (_, { user }, context) => {
@@ -91,7 +97,10 @@ const resolvers = {
     },
     /** Create Game Mutation */
     createGame: async (_, { playerId }, context) => {
-      const newGame = createNewGame(playerId);
+      const user = await context.db
+        .collection('Users')
+        .findOne({playerId});
+      const newGame = createNewGame(playerId, user.username);
       // gamesArr.push(newGame);
       await context.db
         .collection('ActiveGames')
@@ -101,22 +110,19 @@ const resolvers = {
     /** Join Game Mutation */
     joinGame: async (_, { gameId, playerId }, context) => {
       let gameStateIndex;
+      const user = await context.db
+        .collection('Users')
+        .findOne({playerId});
       const gameState = await context.db
         .collection('ActiveGames')
         .findOne({ gameId });
-      // const gameState = gamesArr.find((game, index) => {
-      //   if (game.gameId === gameId) {
-      //     gameStateIndex = index;
-      //     return true;
-      //   }
-      // });
 
       if (!gameState) {
         return false;
       }
 
       /** Publish game if join */
-      const newGameState = joinNewGame(playerId, gameState);
+      const newGameState = joinNewGame(playerId, gameState, user.username);
       const updateStatus = await context.db
       .collection('ActiveGames')
       .replaceOne({ gameId: newGameState.gameId }, newGameState);

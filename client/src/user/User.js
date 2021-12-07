@@ -13,6 +13,9 @@ function User({ setPlayerId, setGameId }) {
   const cookiePlayerId = cookiePlayerIdGroups ? cookiePlayerIdGroups[2] : '';
   const cookieUsernameGroups = document.cookie.match(/(username)=(\w+)/);
   const cookieUsername = cookieUsernameGroups ? cookieUsernameGroups[2] : '';
+  const cookieGameToJoinGroups = document.cookie.match(/(gameToJoin)=(\d+)/);
+  const cookieGameToJoin = cookieGameToJoinGroups ? cookieGameToJoinGroups[2] : '';
+
   const [cookies, setCookies] = useState({ username: cookieUsername, playerId: cookiePlayerId });
   const { data, loading, error } = useQuery(VALIDATE_USER, { variables: { username: cookieUsername, playerId: cookiePlayerId } });
   const navigate = useNavigate();
@@ -20,7 +23,8 @@ function User({ setPlayerId, setGameId }) {
   const clearCookies = () => {
     document.cookie = 'playerId=; Max-Age=-99999999';
     document.cookie = 'username=; Max-Age=-99999999';
-    setCookies({ username: '', playerId: ''});
+    document.cookie = 'gameToJoin=; Max-Age=-99999999';
+    setCookies({ username: '', playerId: '' });
     navigate('../login');
   }
 
@@ -41,12 +45,21 @@ function User({ setPlayerId, setGameId }) {
 
     setCookies(newCookies);
     setPlayerId(cookiePlayerId);
+
+    if (cookieGameToJoin) {
+      
+      document.cookie = 'gameToJoin=; Max-Age=-99999999';
+      setGameId(cookieGameToJoin);
+      navigate('../');
+      
+    }
+    
   }, [data])
  
   return (
     <>
     { loading && <div><h3>Loading</h3></div>} 
-    { error && <h3>Error :(</h3> }
+    { error && navigate('../login') }
     { data && data.validateUser && <div>
       <h1>Welcome {cookies.username}!</h1>
       <CreateGame playerId={cookies.playerId} setGameId={setGameId} />

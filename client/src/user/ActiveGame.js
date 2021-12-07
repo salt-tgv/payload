@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 import { JOIN_GAME } from './graphql/mutations'
 import { useNavigate } from 'react-router';
 
-function ActiveGame({ gameId, setGameId, playerId }) {
+function ActiveGame({ gameId, setGameId, playerId, opponent }) {
   const [joinGameFunction, { data }] = useMutation(JOIN_GAME);
   const navigate = useNavigate();
   
@@ -24,7 +24,8 @@ function ActiveGame({ gameId, setGameId, playerId }) {
 
   return (
     <div onClick={handleClick}>
-      <h3>{gameId} Continue playing</h3>
+      <h3>VS. {opponent}</h3>
+      <p>Game id: {gameId}</p>
     </div>
   )
 }

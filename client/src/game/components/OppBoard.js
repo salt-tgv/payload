@@ -1,5 +1,3 @@
-import { useMutation } from '@apollo/client'
-import { PLAY_MOVE } from '../graphql/mutations';
 import { generatePlayBoard } from '../gameLogic/boardLogic';
 import './Board.css';
 

@@ -24,7 +24,7 @@ function Game({ playerId, gameId }) {
   }, []);
     
   if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error :(</p>;
+  if (error) return (<> { window.location.href="/user"} </>);
   
   const { gameState } = data;
   const { winner } = gameState;

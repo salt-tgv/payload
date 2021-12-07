@@ -1,4 +1,3 @@
-
 const redirectIfCookie = (navigate) => {
   const cookiePlayerId = document.cookie.match(/(playerId)=(\d+)/) || '';
   const cookieUsername = document.cookie.match(/(username)=(\w+)/) || '';

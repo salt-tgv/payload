@@ -10,6 +10,7 @@ import Login from './login/Login';
 import Signup from './login/Signup';
 import User from './user/User';
 import InitializeGame from './game/InitializeGame';
+import JoinGameByLink from './user/JoinGameByLink';
 
 function App() {
   const [playerId, setPlayerId] = useState('');
@@ -30,6 +31,7 @@ function App() {
         <Route path="/login" element={<Login />}></Route>
         <Route path="/signup" element={<Signup />}></Route>
         <Route path="/user" element={<User setPlayerId={setPlayerId} setGameId={setGameId} />}></Route>
+        <Route path="/joingame/:gameid" element={<JoinGameByLink/>}></Route>
       <Route path="/" element={<InitializeGame playerId={playerId} gameId={gameId} />}></Route>
     </Routes>
     </BrowserRouter>

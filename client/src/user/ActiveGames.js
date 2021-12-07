@@ -9,7 +9,8 @@ function ActiveGames ({ playerId, setGameId }) {
   if (error) return <h2>Error</h2>
 
   const activeGamesArr = data.activeGames.map((game, index) => {
-    return <ActiveGame key={index} gameId={game.gameId} playerId={playerId} setGameId={setGameId} />
+    const opponent = game.board1.playerId === playerId ? game.player2.username : game.player1.username;
+    return <ActiveGame key={index} gameId={game.gameId} playerId={playerId} opponent={opponent} setGameId={setGameId} />
   });
 
   return (

@@ -23,6 +23,7 @@ const typeDefs = gql`
     serverMessages: serverMessages
     messages: [chatMessage]
     gameState: gameState
+    validGame (gameId: String!): Boolean
     assets: assets
     activeGames (playerId: String!): [gameState]
     validateUser(username: String!, playerId: String!): Boolean
@@ -72,6 +73,7 @@ const typeDefs = gql`
 
   type Player {
     ready: Boolean!
+    username: String
   }
 
   type gameState {

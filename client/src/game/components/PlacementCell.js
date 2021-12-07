@@ -1,5 +1,5 @@
 import './PlayCell.css'
-import { cellGradientGreen, cellSolidGreen, cellGradientWhite } from '../graphics/cells';
+import { cellGradientGreen, cellSolidGreen } from '../graphics/cells';
 import { serverGreen, dbGreen } from '../graphics/assets'
 
 function PlacementCell ({cellData, onClickCb, onEnterCb, onLeaveCb, x, y, activeAssetIndex}) {

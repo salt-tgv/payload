@@ -1,5 +1,5 @@
 import { generatePlacementBoard, boardGenerator } from '../gameLogic/boardLogic';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useMutation } from '@apollo/client';
 import PlacementInventory from './PlacementInventory';
 import PlacedInventory from './PlacedInventory';

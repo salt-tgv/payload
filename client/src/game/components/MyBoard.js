@@ -1,4 +1,4 @@
-import { useMutation, useQuery } from '@apollo/client'
+import { useQuery } from '@apollo/client'
 import { useEffect } from 'react';
 import { GET_ASSETS, SUBSCRIBE_ASSETS } from '../graphql/queries';
 import { generatePlayBoard } from '../gameLogic/boardLogic';
