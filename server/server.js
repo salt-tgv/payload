@@ -1,4 +1,4 @@
-const cors = require('cors');
+require('dotenv').config();
 const { ApolloServer } = require('apollo-server-express');
 const http = require('http');
 const { execute, subscribe } = require('graphql');
@@ -7,6 +7,8 @@ const { makeExecutableSchema } = require('@graphql-tools/schema');
 const express = require('express');
 const typeDefs = require('./graphql/typedefs');
 const resolvers = require('./graphql/resolvers');
+const { dbInit } = require('./db/db');
+const cors = require('cors');
 
 const PORT = process.env.PORT || 1337;
 //https://www.apollographql.com/docs/apollo-server/integrations/middleware/#swapping-out-apollo-server
@@ -35,8 +37,9 @@ async function startServer () {
 
     const server = new ApolloServer({
       schema,
-      context: ({ req, res }) => {
-        return { playerId: req.headers.playerid, gameId: req.headers.gameid, res }
+      context: async ({ req, res }) => {
+        const db = await dbInit();
+        return { playerId: req.headers.playerid, gameId: req.headers.gameid, res, db}
       },
       plugins: [{
         async serverWillStart() {
