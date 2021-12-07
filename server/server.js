@@ -39,7 +39,7 @@ async function startServer () {
       schema,
       context: async ({ req, res }) => {
         const db = await dbInit();
-        return { playerId: req.headers.playerid, gameId: req.headers.gameid, res, db}
+        return { playerId: req.headers.playerid, gameId: req.headers.gameid, res, db }
       },
       plugins: [{
         async serverWillStart() {

@@ -14,8 +14,10 @@ const resolvers = {
   Query: {
     serverMessages: () => (serverMessage),
     messages: () => messageArr,
-    gameState: (parent, args, context, info) => {
-      const gameState = gamesArr.find(game => game.gameId === context.gameId);
+    gameState: async (parent, args, context, info) => {
+      const gameState = await context.db
+        .collection('ActiveGames')
+        .findOne({ gameId: context.gameId });
       return {
         activePlayer: gameState.activePlayer,
         player1: gameState.player1,
@@ -25,26 +27,27 @@ const resolvers = {
         board2: gameState.board2,
       }
     },
-    assets: (parent, args, context) => {
-      const gameState = gamesArr.find(game => game.gameId === context.gameId);
+    assets: async (parent, args, context) => {
+      const gameState = await context.db
+        .collection('ActiveGames')
+        .findOne({ gameId: context.gameId });
       if (context.playerId === gameState.asset1.playerId)
         return gameState.asset1;
       else if (context.playerId === gameState.asset2.playerId)
         return gameState.asset2;
     },
-    activeGames: (parent, args, context) => {
-      const activeGames = gamesArr.filter(game => {
-        if ((game.board1.playerId === args.playerId) || (game.board2.playerId === args.playerId)) {
-          return true;
-        }
-
-        return false;
-      })
+    activeGames: async (parent, args, context) => {
+      const activeGames = context.db
+        .collection('ActiveGames')
+        .find({$or: [{activePlayer: args.playerId}, {inactivePlayer: args.playerId}]})
+        .toArray();
 
       return activeGames;
     },
-    validateUser: (parent,{username, playerId}, context) => {
-      const foundUser = usersArr.find(userInArr => userInArr.username === username);
+    validateUser: async (parent, {username, playerId}, context) => {
+      const foundUser = await context.db
+        .collection('Users')
+        .findOne({ username });
       if (!foundUser) {
         return false;
       }
@@ -56,12 +59,17 @@ const resolvers = {
   },
   Mutation: {
     signup: async (_, { user }, context) => {
-      const foundUser = usersArr.find(userInArr => userInArr.username === user.username)
+      const foundUser = await context.db
+        .collection('Users')
+        .findOne({ username: user.username });
+        
       if (!foundUser) {
         const hash = await generateHash(user.password);
         user.playerId = String(Date.now());
         user.password = hash;
-        usersArr.push(user);
+        await context.db
+          .collection('Users')
+          .insertOne(user);
         return { username: user.username, playerId: user.playerId };
       }
 
@@ -69,7 +77,9 @@ const resolvers = {
     },
 
     login: async (_, { user }, context) => {
-      const foundUser = usersArr.find(userInArr => userInArr.username === user.username)
+      const foundUser = await context.db
+        .collection('Users')
+        .findOne({ username: user.username });
       if (foundUser) {
         if (await compareHash(user.password, foundUser.password)){
           return { username: foundUser.username, playerId: foundUser.playerId };
@@ -80,37 +90,48 @@ const resolvers = {
       return { error: 'User not found', username: 'error' };
     },
     /** Create Game Mutation */
-    createGame: (_, { playerId }, context) => {
+    createGame: async (_, { playerId }, context) => {
       const newGame = createNewGame(playerId);
-      gamesArr.push(newGame);
+      // gamesArr.push(newGame);
+      await context.db
+        .collection('ActiveGames')
+        .insertOne(newGame);
       return newGame.gameId;
     },
     /** Join Game Mutation */
-    joinGame: (_, { gameId, playerId }, context) => {
+    joinGame: async (_, { gameId, playerId }, context) => {
       let gameStateIndex;
-      const gameState = gamesArr.find((game, index) => {
-        if (game.gameId === gameId) {
-          gameStateIndex = index;
-          return true;
-        }
-      });
+      const gameState = await context.db
+        .collection('ActiveGames')
+        .findOne({ gameId });
+      // const gameState = gamesArr.find((game, index) => {
+      //   if (game.gameId === gameId) {
+      //     gameStateIndex = index;
+      //     return true;
+      //   }
+      // });
 
       if (!gameState) {
         return false;
       }
 
       /** Publish game if join */
-      gamesArr[gameStateIndex] = joinNewGame(playerId, gameState);
-      pubsub.publish(['GAME_UPDATE'], { gameUpdate: { 
-        player1: gameState.player1, 
-        player2: gameState.player2, 
-        board1: gameState.board1, 
-        board2: gameState.board2, 
-        gameId: gameState.gameId,
-        winner: gameState.winner,
-        activePlayer: gameState.activePlayer,
-      }})
-
+      const newGameState = joinNewGame(playerId, gameState);
+      const updateStatus = await context.db
+      .collection('ActiveGames')
+      .replaceOne({ gameId: newGameState.gameId }, newGameState);
+      if(updateStatus.acknowledged){
+        pubsub.publish(['GAME_UPDATE'], { gameUpdate: { 
+          player1: newGameState.player1, 
+          player2: newGameState.player2, 
+          board1: newGameState.board1, 
+          board2: newGameState.board2, 
+          gameId: newGameState.gameId,
+          winner: newGameState.winner,
+          activePlayer: newGameState.activePlayer,
+        }})
+      }
+      
       return true;
     },
     sendMessage: (_, args) => {
@@ -118,31 +139,49 @@ const resolvers = {
       pubsub.publish('NEW_MESSAGE', { newMessage: args })
       return args
     },
-    playMove: (parent, args, context) => {
+    playMove: async (parent, args, context) => {
       /** WARNING: gameState is a reference to gameState (pointer) */
-      const gameState = gamesArr.find(game => game.gameId === context.gameId);
+      const gameState = await context.db
+        .collection('ActiveGames')
+        .findOne({ gameId: context.gameId });
+      
       if (gameState.activePlayer === context.playerId && !gameState.winner) {
         const updatedAsset = resolveMove(gameState, args.coords, context.playerId);
         pubsub.publish('ASSET_UPDATE', { assetUpdate: updatedAsset, gameUpdate: { gameId: gameState.gameId } })
         checkWin(gameState);
         gameState.activePlayer = gameState.inactivePlayer;
         gameState.inactivePlayer = context.playerId;
-        pubsub.publish('GAME_UPDATE', { gameUpdate: { 
-          player1: gameState.player1,
-          player2: gameState.player2,
-          board1: gameState.board1,
-          gameId: gameState.gameId,
-          board2: gameState.board2, 
-          winner: gameState.winner, 
-          activePlayer: gameState.activePlayer}});
-        if (gameState.winner) {
-          const gameIndex = gamesArr.findIndex(game => game.gameId === context.gameId);
-          finishedArr.push(gamesArr.splice(gameIndex, 1));
+
+        const updateStatus = await context.db
+          .collection('ActiveGames')
+          .replaceOne({ gameId: gameState.gameId }, gameState);
+
+        if (updateStatus.acknowledged){
+          pubsub.publish('GAME_UPDATE', { gameUpdate: { 
+            player1: gameState.player1,
+            player2: gameState.player2,
+            board1: gameState.board1,
+            gameId: gameState.gameId,
+            board2: gameState.board2, 
+            winner: gameState.winner, 
+            activePlayer: gameState.activePlayer}});
+          
+          if (gameState.winner) {
+            const gameIndex = gamesArr.findIndex(game => game.gameId === context.gameId);
+            await context.db
+              .collection('ActiveGames')
+              .deleteOne({ gameId: gameState.gameId });
+            await context.db
+              .collection('FinishedGames')
+              .insertOne(gameState);
+          }
         }
       }
     },
-    placeAssets: (parent, args, context) => {
-      const gameState = gamesArr.find(game => game.gameId === context.gameId);
+    placeAssets: async (parent, args, context) => {
+      const gameState = await context.db
+        .collection('ActiveGames')
+        .findOne({ gameId: context.gameId });
       const { assetsToPlace } = args;
       const { playerId } = context;
       assetsToPlace.forEach(asset => {
@@ -157,16 +196,22 @@ const resolvers = {
         gameState.asset2.assets = assetsToPlace;
         gameState.player2.ready = true;
       }
-      pubsub.publish(['GAME_UPDATE'], { gameUpdate: { 
-        player1: gameState.player1, 
-        player2: gameState.player2, 
-        board1: gameState.board1, 
-        board2: gameState.board2, 
-        gameId: gameState.gameId,
-        winner: gameState.winner,
-        activePlayer: gameState.activePlayer,
-      }})
 
+      const updateStatus = await context.db
+        .collection('ActiveGames')
+        .replaceOne({ gameId: gameState.gameId }, gameState);
+
+      if(updateStatus.acknowledged){
+        pubsub.publish(['GAME_UPDATE'], { gameUpdate: { 
+          player1: gameState.player1, 
+          player2: gameState.player2, 
+          board1: gameState.board1, 
+          board2: gameState.board2, 
+          gameId: gameState.gameId,
+          winner: gameState.winner,
+          activePlayer: gameState.activePlayer,
+        }})
+      }
     },
   },
   Subscription: {
