@@ -40,13 +40,6 @@ const [activeAssetIndex, setActiveAssetIndex] = useState(-1);
 const [placementBoardState, setPlacementBoardState] = useState(boardGenerator(5, initialCellValue));
 const [playerConfirm] = useMutation(PLAYER_CONFIRM);
 
-// useEffect(() => {
-//   setPlacedAssets([])
-//   return () => {
-//     setPlacedAssets([])
-//   }
-//   }, []);
-
 const onClickCb = (x, y, cellData) => {
   if(activeAssetIndex !== -1){
     const asset = assetsToPlace[activeAssetIndex];
@@ -156,7 +149,6 @@ return (
         <PlacedInventory assets={placedAssets} resetPlacedAsset={resetPlacedAsset} />
         {(assetsToPlace.length === 0 && !gameState[player].ready) &&<button className="board__confirm" onClick={()=> {
           playerConfirm({ variables: { assetsToPlace: placedAssets.map(asset => ({cells: asset.cells, type: asset.type})) }});
-          console.log(placedAssets);
         }}>CONFIRM!</button>}
         {(assetsToPlace.length === 0 && gameState[player].ready) && <h2>Waiting for your slow opponent...</h2>}
       </div>
