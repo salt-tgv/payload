@@ -10,7 +10,25 @@ import { placementText } from '../graphics/text';
 const assetList = [
   {
     cells: [],
-    type: 'SERVER',
+    type: 'DB',
+    size: 5,
+    vertical: true,
+  },
+  {
+    cells: [],
+    type: 'DB',
+    size: 4,
+    vertical: true,
+  },
+  {
+    cells: [],
+    type: 'DB',
+    size: 3,
+    vertical: true,
+  },
+  {
+    cells: [],
+    type: 'DB',
     size: 3,
     vertical: true,
   },
@@ -23,7 +41,7 @@ const assetList = [
   {
     cells: [],
     type: 'DB',
-    size: 1,
+    size: 2,
     vertical: false,
   },
 ]
@@ -37,7 +55,7 @@ function PlacementBoard ({ gameState, playerId }) {
 const [assetsToPlace, setAssetsToPlace] = useState(assetList.map(asset => ({...asset, cells: []})));
 const [placedAssets, setPlacedAssets] = useState([]);
 const [activeAssetIndex, setActiveAssetIndex] = useState(-1);
-const [placementBoardState, setPlacementBoardState] = useState(boardGenerator(5, initialCellValue));
+const [placementBoardState, setPlacementBoardState] = useState(boardGenerator(8, initialCellValue));
 const [playerConfirm] = useMutation(PLAYER_CONFIRM);
 
 const onClickCb = (x, y, cellData) => {

@@ -28,8 +28,9 @@ function JoinGame({ playerId, setGameId }) {
   }, [data])
   
   return (
-    <div>
-      <button onClick={() => setShowForm(true)}>Join Game</button>
+    <div className="game-actions__join-game" onClick={() => setShowForm(true)}>
+      <i class="fas fa-satellite-dish"></i>
+      <p>Join Game</p>
       { showForm && 
       <form onSubmit={handleSubmit}>
         <input type="text" placeholder="Game ID" onChange={(e) => setTextInput(e.target.value)} value={textInput}></input>

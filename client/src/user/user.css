@@ -1,0 +1,58 @@
+.user, .user-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-family: Raleway;
+}
+
+.loading {
+  
+}
+
+.user__header {
+  color: white;
+}
+
+.user__logout-button {
+
+}
+
+.user__game-actions {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  
+}
+
+.game-actions__create-game, .game-actions__join-game {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  background-color: #2EC980;
+  font-size: 25px;
+  width: 30vw; 
+  height: 10vh; 
+  max-width: 360px;
+  min-width: 200px;
+  min-height: 50px;
+  max-height: 70px; 
+  border: none;
+  box-shadow: inset 1px 1px 5px 0px rgba(29, 29, 29, 0.303);
+  cursor: pointer;
+  margin: 10px;
+}
+
+.game-actions__create-game:hover, .game-actions__join-game:hover {
+  background-color: #89C9AB;
+}
+
+.game-actions__create-game > i, .game-actions__join-game > i {
+  font-size: 30px;
+  margin: 10px; 
+  pointer-events: none;
+}
+
+

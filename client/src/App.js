@@ -6,8 +6,8 @@ import {
   Route
 } from "react-router-dom";
 import './app.css'
-import Login from './login/Login';
-import Signup from './login/Signup';
+import Login from './auth/Login';
+import Signup from './auth/Signup';
 import User from './user/User';
 import InitializeGame from './game/InitializeGame';
 import JoinGameByLink from './user/JoinGameByLink';

@@ -1,6 +1,6 @@
 const generateBoard = require('../gameLogic/boardLogic');
 
-const createNewGame = (playerId, username, size = 5) => {
+const createNewGame = (playerId, username, size = 8) => {
   const gameState = {
     gameId: String(Date.now()),
     activePlayer: playerId,

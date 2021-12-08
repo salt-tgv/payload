@@ -7,6 +7,9 @@ import JoinGame from './JoinGame';
 import ActiveGames from './ActiveGames';
 import { VALIDATE_USER } from './graphql/queries';
 import { JOIN_GAME } from './graphql/mutations';
+import { userPageText } from '../game/graphics/text';
+import './user.css';
+
 
 function User({ setPlayerId, setGameId }) {
   const cookiePlayerIdGroups = document.cookie.match(/(playerId)=(\d+)/);
@@ -56,18 +59,23 @@ function User({ setPlayerId, setGameId }) {
   }, [data])
  
   return (
-    <>
-    { loading && <div><h3>Loading</h3></div>} 
-    { error && navigate('../login') }
-    { data && data.validateUser && <div>
-      <h1>Welcome {cookies.username}!</h1>
-      <CreateGame playerId={cookies.playerId} setGameId={setGameId} />
-      <JoinGame playerId={cookies.playerId} setGameId={setGameId} />
-      <button onClick={clearCookies}>Log Out</button>
-      <ActiveGames playerId={cookies.playerId} setGameId={setGameId}/>
-    </div>
-    }
-    </>
+    <main className="user-wrapper">
+      
+        { loading && <div className="loading"><h3>Loading</h3></div>} 
+        { error && navigate('../login') }
+        { data && data.validateUser && 
+        <section className="user">
+          <div>{userPageText}</div>
+          <h1 className="user__header">Welcome {cookies.username}!</h1>
+          <div className="user__game-actions"> 
+            <CreateGame playerId={cookies.playerId} setGameId={setGameId} />
+            <JoinGame playerId={cookies.playerId} setGameId={setGameId} />
+          </div>
+          <button className="user__logout-button" onClick={clearCookies}>Log Out</button>
+          <ActiveGames playerId={cookies.playerId} setGameId={setGameId}/>
+        </section>}
+      
+    </main>
   )
 }
 

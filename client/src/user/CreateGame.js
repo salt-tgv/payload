@@ -17,8 +17,9 @@ function CreateGame({ playerId, setGameId }) {
   }, [data])
 
   return(
-    <div>
-      <button onClick={() => createGameFunction({ variables: { playerId }})}>Create game</button>
+    <div className="game-actions__create-game" onClick={() => createGameFunction({ variables: { playerId }})}>
+      <i class="fas fa-power-off"></i>
+      <p>Create game</p>
     </div>
   )
 }
