@@ -49,7 +49,6 @@ function PlayCell ({ cellData, x, y, active, assetType }) {
         return cellSolidRed;
       case 'DB':
         if (!explosionCoords.hasExploded) {
-          // setTimeout(() => explode(explosionCoords.x + 50, explosionCoords.y + 50), 100)
           setTimeout(() => explode(explosionCoords.x + (Math.cos(10) * 100), explosionCoords.y + (Math.sin(10) * 100)), 200);
           setTimeout(() => explode(explosionCoords.x - (Math.cos(40) * 100), explosionCoords.y - (Math.sin(40) * 100)), 300);
           setTimeout(() => explode(explosionCoords.x - (Math.cos(20) * 100), explosionCoords.y - (Math.sin(20) * 100)), 400);
@@ -59,7 +58,6 @@ function PlayCell ({ cellData, x, y, active, assetType }) {
         return <>{cellSolidRed}{<div className="asset-container">{dbRed}</div>}</>;
       case 'SERVER':
         if (!explosionCoords.hasExploded) {
-          // setTimeout(() => explode(explosionCoords.x + 50, explosionCoords.y + 50), 100)
           setTimeout(() => explode(explosionCoords.x + (Math.cos(10) * 100), explosionCoords.y + (Math.sin(10) * 100)), 200);
           setTimeout(() => explode(explosionCoords.x - (Math.cos(40) * 100), explosionCoords.y - (Math.sin(40) * 100)), 300);
           setTimeout(() => explode(explosionCoords.x - (Math.cos(20) * 100), explosionCoords.y - (Math.sin(20) * 100)), 400);
@@ -70,28 +68,6 @@ function PlayCell ({ cellData, x, y, active, assetType }) {
     }
   }
 
-  // const cellClass = () => {
-  //   if (assetType) {
-  //     if (/DESTROYED/.test(assetType)){
-  //       return 'board__cell--destroyed'
-  //     }
-  //     return 'board__cell--asset';
-  //   }
-
-  //   switch(cellData) {
-  //     case 'UNKNOWN':
-  //       return "board__cell--unknown";
-  //     case 'MISS':
-  //       return "board__cell--miss";
-  //     case 'HIT':
-  //       return "board__cell--hit";
-  //     case 'DB':
-  //       return "board__cell--revealed";
-  //     case 'SERVER':
-  //       return "board__cell--revealed";
-  //   }
-  // }
-
   const handleMouseEnter = () => {
     setIsHovering(true);
   }
@@ -100,12 +76,10 @@ function PlayCell ({ cellData, x, y, active, assetType }) {
     setIsHovering(false);
   }
 
-  // const cellClassList = `${cellClass()} ${hoverClass}`
-  const graphicsToRender = graphics()
+  const graphicsToRender = graphics();
 
   return (
     <div 
-      // className={cellClassList} 
       className="cell"
       id={`${x},${y}`}
       onClick={handleClick}

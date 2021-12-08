@@ -4,6 +4,7 @@ import { GET_BOARDS, SUBSCRIBE_BOARDS} from './graphql/queries';
 import OppBoard from './components/OppBoard';
 import MyBoard from './components/MyBoard';
 import PlacementBoard from './components/PlacementBoard';
+import Connecting from './components/Connecting';
 import { useNavigate } from 'react-router';
 import './game.css';
 
@@ -53,7 +54,7 @@ function Game({ playerId, gameId }) {
         <h1>{gameOver}</h1> 
         <button onClick={() => navigate('../user')}>Exit</button>
         </>}
-      { !allJoined && <h1>{gameId}</h1>}
+      { !allJoined && <Connecting gameId={gameId} />}
       {areBothReady ? playBoards : allJoined && <PlacementBoard gameState={gameState} playerId={playerId}/>}
     </div>
   );

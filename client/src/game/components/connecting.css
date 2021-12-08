@@ -1,0 +1,59 @@
+.connecting-page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    width: 100vw;
+}
+
+.connecting-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+    transform: rotate(45deg) rotate3d(1, -1, 0, 45deg);
+}
+
+.connecting-info {
+    display: flex;
+    flex-direction: column;
+    width: 60vw;
+    max-width: 500px;
+    gap: 10px;
+}
+
+.card-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #2EC980;
+    padding: 10px;
+}
+
+.card-wrapper:hover {
+    background-color: #89C9AB;
+    cursor: pointer;
+}
+.card-wrapper:active {
+    background-color: #b2dec9;
+}
+
+.card-wrapper > i {
+    font-size: 30px;
+}
+
+.connecting-info__card {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.connecting-info__title {
+    align-self: center;
+    color: white;
+}
+
+.connecting-info__heading, .connecting-info__text {
+    pointer-events: none;
+}
