@@ -9,6 +9,8 @@ const dbInit = async () => {
       {
         useNewUrlParser: true,
         useUnifiedTopology: true,
+        connectTimeoutMS: 100000,
+        serverSelectionTimeoutMS: 100000,
       }
     )
 

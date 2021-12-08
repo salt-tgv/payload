@@ -29,14 +29,19 @@ function JoinGame({ playerId, setGameId }) {
   
   return (
     <div className="game-actions__join-game" onClick={() => setShowForm(true)}>
-      <i class="fas fa-satellite-dish"></i>
-      <p>Join Game</p>
-      { showForm && 
-      <form onSubmit={handleSubmit}>
-        <input type="text" placeholder="Game ID" onChange={(e) => setTextInput(e.target.value)} value={textInput}></input>
-        <input type="submit" value="Connect" />
-      </form>}
-      { notFound && <p>Game not found...</p>}
+      { !notFound && <div className="game-actions__join-game">
+        <i class="fas fa-satellite-dish"></i>
+        { !showForm && <p>Join Game</p>}
+        { showForm && 
+        <form className="join-game__form" onSubmit={handleSubmit}>
+          <input className="join-game__input" type="text" placeholder="Game ID" onChange={(e) => setTextInput(e.target.value)} value={textInput}></input>
+          <input className="join-game__submit" type="submit" value="JOIN!" />
+        </form>}
+      </div>}
+      { notFound && <div className="join-game__form">
+        <p className="join-game__text">Game not found...</p>
+        <button className="join-game__submit" onClick={()=>{setNotFound(false)}}>OK</button>
+        </div>}
     </div>
   )
 }

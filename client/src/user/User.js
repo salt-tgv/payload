@@ -59,23 +59,26 @@ function User({ setPlayerId, setGameId }) {
   }, [data])
  
   return (
-    <main className="user-wrapper">
-      
-        { loading && <div className="loading"><h3>Loading</h3></div>} 
+    <div className="user-page">
+      <main className="user-wrapper">
+        { loading && <div className="loading"><h3>Loading...</h3></div>} 
         { error && navigate('../login') }
         { data && data.validateUser && 
         <section className="user">
-          <div>{userPageText}</div>
-          <h1 className="user__header">Welcome {cookies.username}!</h1>
+          <div className="user__header-image">{userPageText}</div>
+          <h1 className="user__header">Welcome {cookies.username} <i class="fas fa-user-secret"></i></h1>
           <div className="user__game-actions"> 
             <CreateGame playerId={cookies.playerId} setGameId={setGameId} />
             <JoinGame playerId={cookies.playerId} setGameId={setGameId} />
           </div>
-          <button className="user__logout-button" onClick={clearCookies}>Log Out</button>
+          <div className="user__active-games-heading">
+            <h2 className="user__active-game-divider">ACTIVE GAMES</h2>
+          </div>
           <ActiveGames playerId={cookies.playerId} setGameId={setGameId}/>
+          <button className="user__logout-button" onClick={clearCookies}>Log Out</button>
         </section>}
-      
-    </main>
+      </main>
+    </div>
   )
 }
 
