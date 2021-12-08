@@ -13,6 +13,11 @@ div {
   width: 6vmin;
   margin: -1px -1px 0 0;
 }
+.placement-cell {
+  height: 8vmin;
+  width: 8vmin;
+  margin: -1px -1px 0 0;
+}
 
 .asset-container {
   height: 100%;
@@ -20,6 +25,15 @@ div {
   position: relative;
   bottom: 9vmin;
   right: 3vmin;
+  pointer-events: none;
+}
+
+.asset-container-placement {
+  height: 100%;
+  width: 100%;
+  position: relative;
+  bottom: 12vmin;
+  right: 4vmin;
   pointer-events: none;
 }
 

@@ -8,7 +8,7 @@ function PlacementCell ({cellData, onClickCb, onEnterCb, onLeaveCb, x, y, active
   let hasAsset = cellData.asset!== 'NONE';
   let isHovered = cellData.hover;
   return (<div id={`${x},${y}`} 
-  className="cell"
+  className="placement-cell"
     // className={cellClass}
     onClick={() => onClickCb(x, y, cellData)}
     onMouseEnter={() => onEnterCb(x, y, cellData)}
@@ -16,7 +16,7 @@ function PlacementCell ({cellData, onClickCb, onEnterCb, onLeaveCb, x, y, active
     {hasAsset && cellSolidGreen}
     {(!hasAsset && isHovered) && cellSolidGreen}
     {(!hasAsset && !isHovered) && cellGradientGreen}
-    {cellData.asset === 'SERVER' && <div className="asset-container">{serverGreen}</div>}
+    {cellData.asset === 'SERVER' && <div className="asset-container-placement">{serverGreen}</div>}
     {cellData.asset === 'DB' && <div className="asset-container">{dbGreen}</div>}
     </div>)
 }
