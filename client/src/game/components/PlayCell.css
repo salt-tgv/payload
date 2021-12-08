@@ -8,57 +8,9 @@ div {
   line-height: 0;
 }
 
-.board__cell--unknown {
-  height: 50px;
-  width: 50px;
-  background: rgb(20, 21, 24);
-  border: 1px solid rgb(33, 65, 80);
-}
-
-.board__cell--hit {
-  height: 50px;
-  width: 50px;
-  background: rgb(139, 0, 0);
-  border: 1px solid rgb(33, 65, 80);
-}
-
-.board__cell--miss {
-  height: 50px;
-  width: 50px;
-  background: rgb(0, 139, 69);
-  border: 1px solid rgb(33, 65, 80);
-}
-
-.board__cell--revealed {
-  height: 50px;
-  width: 50px;
-  background: rgb(255, 0, 0);
-  border: 1px solid rgb(33, 65, 80);
-}
-
-.board__cell--asset {
-  height: 50px;
-  width: 50px;
-  background: rgb(133, 140, 161);
-  border: 1px solid rgb(33, 65, 80);
-}
-
-.board__cell--destroyed {
-  height: 50px;
-  width: 50px;
-  background: rgb(161, 133, 133);
-  border: 1px solid rgb(189, 7, 7);
-}
-
-.board__cell--hover {
-  height: 50px;
-  width: 50px;
-  border: 1px solid rgb(255, 255, 255);
-}
-
 .cell {
-  height: 8vmin;
-  width: 8vmin;
+  height: 6vmin;
+  width: 6vmin;
   margin: -1px -1px 0 0;
 }
 
@@ -66,8 +18,8 @@ div {
   height: 100%;
   width: 100%;
   position: relative;
-  bottom: 12vmin;
-  right: 4vmin;
+  bottom: 9vmin;
+  right: 3vmin;
   pointer-events: none;
 }
 

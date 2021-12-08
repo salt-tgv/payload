@@ -49,13 +49,15 @@ function Game({ playerId, gameId }) {
 
   return (
     <div className="App">
-      { gameOver && 
-        <>
-        <h1>{gameOver}</h1> 
-        <button onClick={() => navigate('../user')}>Exit</button>
-        </>}
-      { !allJoined && <Connecting gameId={gameId} />}
-      {areBothReady ? playBoards : allJoined && <PlacementBoard gameState={gameState} playerId={playerId}/>}
+      <div className="placement-page">
+        { gameOver && 
+          <>
+          <h1>{gameOver}</h1> 
+          <button onClick={() => navigate('../user')}>Exit</button>
+          </>}
+        { !allJoined && <Connecting gameId={gameId} />}
+        {areBothReady ? playBoards : allJoined && <PlacementBoard gameState={gameState} playerId={playerId}/>}
+      </div>
     </div>
   );
 }

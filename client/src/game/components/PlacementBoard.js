@@ -158,19 +158,22 @@ const resetPlacedAsset = (index) => {
 const player = gameState.board1.playerId === playerId ? 'player1' : 'player2'
 
 return (
-  <div className="placement-page">
-    <div className="board-wrapper">
-      <div className="board-contents">
+  <div className="board-wrapper">
+    <div className="board-contents">
+      <div className="placement-3d-text">
         {placementText}
-        <div className="board">
-          <PlacementInventory assets={assetsToPlace} setAssets={setAssetsToPlace} activeAssetIndex={activeAssetIndex} setActiveAssetIndex={setActiveAssetIndex}/>
-          {generatePlacementBoard(placementBoardState, onClickCb, onEnterCb, onLeaveCb)}
-          <PlacedInventory assets={placedAssets} resetPlacedAsset={resetPlacedAsset} />
-          {(assetsToPlace.length === 0 && !gameState[player].ready) &&<button className="board__confirm" onClick={()=> {
-            playerConfirm({ variables: { assetsToPlace: placedAssets.map(asset => ({cells: asset.cells, type: asset.type})) }});
-          }}>CONFIRM!</button>}
-          {(assetsToPlace.length === 0 && gameState[player].ready) && <h2>Waiting for your slow opponent...</h2>}
-        </div>
+      </div>
+      <div className="board">
+        <PlacementInventory assets={assetsToPlace} setAssets={setAssetsToPlace} activeAssetIndex={activeAssetIndex} setActiveAssetIndex={setActiveAssetIndex}/>
+        {generatePlacementBoard(placementBoardState, onClickCb, onEnterCb, onLeaveCb)}
+        <PlacedInventory assets={placedAssets} resetPlacedAsset={resetPlacedAsset} />
+        
+      </div>
+      <div className="confirmation-area">
+        {(assetsToPlace.length === 0 && !gameState[player].ready) &&<button className="board__confirm" onClick={()=> {
+          playerConfirm({ variables: { assetsToPlace: placedAssets.map(asset => ({cells: asset.cells, type: asset.type})) }});
+        }}>CONFIRM!</button>}
+        {(assetsToPlace.length === 0 && gameState[player].ready) && <h2 className="waiting-text">Waiting for your slow opponent...</h2>}
       </div>
     </div>
   </div>)

@@ -2,6 +2,7 @@ import { useQuery } from '@apollo/client'
 import { useEffect } from 'react';
 import { GET_ASSETS, SUBSCRIBE_ASSETS } from '../graphql/queries';
 import { generatePlayBoard } from '../gameLogic/boardLogic';
+import { yourNetworkText } from '../graphics/text';
 import './Board.css';
 
 function MyBoard ({ boardState }) {
@@ -24,7 +25,12 @@ function MyBoard ({ boardState }) {
   const { assets } = data.assets;
 
   return (
-    <div className="board">{generatePlayBoard(boardState, false, assets)}</div>
+    <div className="opp-board-wrapper">
+      <div className="board-text">
+        {yourNetworkText}
+      </div>
+      <div className="board">{generatePlayBoard(boardState, false, assets)}</div>
+    </div>
   )
 }
 

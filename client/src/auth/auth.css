@@ -74,7 +74,6 @@
 }
 
 .login-form__button, .signup-form__button {
-  position: relative;
   display: flex;
   align-items: center;
   background-color: white;

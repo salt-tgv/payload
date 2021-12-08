@@ -1,24 +1,37 @@
 .placement-inventory {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-end;
+  width: 200px;
+}
+
+.placed-inventory {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  width: 200px;
+  padding-left: 7vmin;
 }
 
 .placement-inventory__button--active {
-  opacity: 0.6;
-  width: 50px;
-  height: 50px;
+  width: 16vmin;
+  height: 8vmin;
+  display: flex;
+  cursor: pointer;
 }
 
 .placement-inventory__button {
-  width: 50px;
-  height: 50px;
+  opacity: 0.5;
+  width: 16vmin;
+  height: 8vmin;
+  display: flex;
+  cursor: pointer;
 }
 
 .placement-interactions {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: center;
 }
 
 .inventory-wrapper {
@@ -62,4 +75,17 @@
 .ghost-button {
   width: 6vmin;
   height: 6vmin;
+}
+
+.button-asset {
+  width: 8vmin;
+  height: 8vmin;
+  position: relative;
+  bottom: 4vmin;
+  right: 4vmin;
+}
+
+.button-asset-size {
+  font-size: 30px;
+  color: #2EC980;
 }

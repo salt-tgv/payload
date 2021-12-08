@@ -9,17 +9,25 @@ import {
   serverButtonClicked,
   dbButtonUnclicked,
   dbButtonClicked } from '../graphics/buttons';
+import { serverGreen, dbGreen } from '../graphics/assets';
 
 function PlacementInventory ({ assets, setAssets, activeAssetIndex, setActiveAssetIndex }) {
+  const generateInventoryList = () => assets.map((asset, index) => {
+    return <div
+      className={index === activeAssetIndex ? "placement-inventory__button--active" : "placement-inventory__button"}
+      onClick={() => setActiveAssetIndex(index)} 
+      key={index}>
+        <div class="button-asset">
+          {asset.type === 'DB' ? dbGreen : serverGreen}
+        </div>
+        <div class="button-asset-size">
+          <p>X {asset.size}</p>
+        </div>
+      </div>
+    })
+
   const [placeVertically, setPlaceVertically] = useState(true);
   const [isDatabase, setIsDatabase] = useState(true);
-  const inventoryList = assets.map((asset, index) => {
-    return <button 
-    className={index === activeAssetIndex ? "placement-inventory__button--active" : "placement-inventory__button"}
-    onClick={() => setActiveAssetIndex(index)} 
-    key={index} 
-    >{asset.size}</button>
-  })
 
   useEffect(() => {
     if (!assets.every(asset => asset.vertical === placeVertically)) {
@@ -30,17 +38,19 @@ function PlacementInventory ({ assets, setAssets, activeAssetIndex, setActiveAss
     if(!assets.every(asset => asset.type === 'DB') && isDatabase) {
       const newAssets = [...assets];
       newAssets.forEach(asset => asset.type = 'DB');
+      setAssets(newAssets);
     }
     if(!assets.every(asset => asset.type === 'SERVER') && !isDatabase) {
       const newAssets = [...assets];
       newAssets.forEach(asset => asset.type = 'SERVER');
+      setAssets(newAssets);
     }
   }, [placeVertically, isDatabase, assets])
   
   return (
     <div className="inventory-wrapper">
       <div className="placement-inventory">
-        {inventoryList}
+        {generateInventoryList()}
       </div>
       <div className="placement-interactions">
         {placeVertically && <div className="orientation-buttons">

@@ -1,6 +1,11 @@
+.opp-board-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
 .board {
   display: flex;
-  margin-top: 30px;
 }
 
 .grid {
@@ -10,4 +15,14 @@
 .board__column {
   display: flex;
   flex-direction: column;
+}
+
+.turn-text {
+  color: #2EC980;
+}
+
+.board-text {
+  width: 48vmin;
+  padding-right: 4vmin;
+  margin-bottom: 2vmin;
 }

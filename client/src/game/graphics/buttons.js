@@ -49,17 +49,18 @@ const horizontalButtonUnclicked = <svg xmlns="http://www.w3.org/2000/svg" width=
   <rect x="40" y="40" width="100" height="100" fill="#56c993"/>
   <polygon points="40 140 50 150 150 150 140 140 40 140" fill="#2ec980"/>
   <polygon points="140 140 140 40 150 50 150 150 140 140" fill="#89c9ab"/>
-  <polygon points="130 50 50 50 80 80 80 100 100 100 130 130 130 50" fill="#20ab6a"/>
+  <polygon points="131.57 90 86.31 44.74 86.31 78.69 75 90 86.31 101.31 86.31 135.25 131.57 90" fill="#20ab6a"/>
 </g>
 </svg>
 
-const horizontalButtonClicked = <svg xmlns="http://www.w3.org/2000/svg" width="9vmin" height="9vmin" viewBox="0 0 150 150">
+const horizontalButtonClicked = <svg xmlns="http://www.w3.org/2000/svg" width="9vmin" height="9vmin" viewBox="0 0 150.15 150.15">
 <g>
   <rect width="150" height="150" fill="none"/>
-  <rect x="49.94" y="49.94" width="100" height="100" fill="#56c993"/>
-  <polygon points="139.94 59.94 59.94 59.94 89.94 89.94 89.94 109.94 109.94 109.94 139.94 139.94 139.94 59.94" fill="#00522c"/>
+  <rect x="50.15" y="50.15" width="100" height="100" fill="#56c993"/>
+  <polygon points="141.72 100.15 96.46 54.89 96.46 88.83 85.15 100.15 96.46 111.46 96.46 145.4 141.72 100.15" fill="#00522c"/>
 </g>
 </svg>
+
 
 const verticalButtonUnclicked = <svg xmlns="http://www.w3.org/2000/svg" width="9vmin" height="9vmin" viewBox="0 0 150 150">
 <g>
@@ -67,17 +68,19 @@ const verticalButtonUnclicked = <svg xmlns="http://www.w3.org/2000/svg" width="9
   <rect x="40" y="40" width="100" height="100" fill="#56c993"/>
   <polygon points="40 140 50 150 150 150 140 140 40 140" fill="#2ec980"/>
   <polygon points="140 140 140 40 150 50 150 150 140 140" fill="#89c9ab"/>
-  <polygon points="50 50 50 130 80 100 100 100 100 80 130 50 50 50" fill="#20ab6a"/>
+  <polygon points="90 51.58 44.74 96.83 78.69 96.83 90 108.15 101.31 96.83 135.25 96.83 90 51.58" fill="#20ab6a"/>
 </g>
 </svg>
+
 
 const verticalButtonClicked = <svg xmlns="http://www.w3.org/2000/svg" width="9vmin" height="9vmin" viewBox="0 0 150 150">
 <g>
   <rect width="150" height="150" fill="none"/>
-  <rect x="50" y="50" width="100" height="100" fill="#56c993"/>
-  <polygon points="60.15 60.15 60.15 140.15 90.15 110.15 110.15 110.15 110.15 90.15 140.15 60.15 60.15 60.15" fill="#00522c"/>
+  <rect x="49.94" y="49.94" width="100" height="100" fill="#56c993"/>
+  <polygon points="99.94 61.52 54.68 106.77 88.62 106.77 99.94 118.08 111.25 106.77 145.19 106.77 99.94 61.52" fill="#00522c"/>
 </g>
 </svg>
+
 
 
 

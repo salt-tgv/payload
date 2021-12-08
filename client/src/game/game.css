@@ -5,6 +5,9 @@
     width: 100vw;
     height: 100vh;
 }
+.placement-3d-text {
+    padding-right: 55px;
+}
 
 .board-wrapper {
     display: flex;
@@ -18,4 +21,30 @@
     align-items: center;
     gap: 20px;
 
+}
+
+.confirmation-area {
+    height: 120px;
+}
+
+.board__confirm {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #2EC980;
+    width: 45vw; 
+    height: 10vh; 
+    max-width: 400px;
+    min-width: 300px;
+    min-height: 50px;
+    max-height: 70px;
+    border: none;
+    cursor: pointer;
+    margin: 10px;
+    font-family: Raleway;
+    font-size: 30px;
+}
+
+.waiting-text {
+    color: #2EC980;
 }
