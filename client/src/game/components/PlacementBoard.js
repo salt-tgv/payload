@@ -158,17 +158,19 @@ const resetPlacedAsset = (index) => {
 const player = gameState.board1.playerId === playerId ? 'player1' : 'player2'
 
 return (
-  <div className="board-wrapper">
-    <div className="board-contents">
-      {placementText}
-      <div className="board">
-        <PlacementInventory assets={assetsToPlace} setAssets={setAssetsToPlace} activeAssetIndex={activeAssetIndex} setActiveAssetIndex={setActiveAssetIndex}/>
-        {generatePlacementBoard(placementBoardState, onClickCb, onEnterCb, onLeaveCb)}
-        <PlacedInventory assets={placedAssets} resetPlacedAsset={resetPlacedAsset} />
-        {(assetsToPlace.length === 0 && !gameState[player].ready) &&<button className="board__confirm" onClick={()=> {
-          playerConfirm({ variables: { assetsToPlace: placedAssets.map(asset => ({cells: asset.cells, type: asset.type})) }});
-        }}>CONFIRM!</button>}
-        {(assetsToPlace.length === 0 && gameState[player].ready) && <h2>Waiting for your slow opponent...</h2>}
+  <div className="placement-page">
+    <div className="board-wrapper">
+      <div className="board-contents">
+        {placementText}
+        <div className="board">
+          <PlacementInventory assets={assetsToPlace} setAssets={setAssetsToPlace} activeAssetIndex={activeAssetIndex} setActiveAssetIndex={setActiveAssetIndex}/>
+          {generatePlacementBoard(placementBoardState, onClickCb, onEnterCb, onLeaveCb)}
+          <PlacedInventory assets={placedAssets} resetPlacedAsset={resetPlacedAsset} />
+          {(assetsToPlace.length === 0 && !gameState[player].ready) &&<button className="board__confirm" onClick={()=> {
+            playerConfirm({ variables: { assetsToPlace: placedAssets.map(asset => ({cells: asset.cells, type: asset.type})) }});
+          }}>CONFIRM!</button>}
+          {(assetsToPlace.length === 0 && gameState[player].ready) && <h2>Waiting for your slow opponent...</h2>}
+        </div>
       </div>
     </div>
   </div>)

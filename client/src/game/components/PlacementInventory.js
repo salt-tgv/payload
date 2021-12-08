@@ -1,5 +1,14 @@
 import { useState, useEffect } from 'react';
 import './PlacementInventory.css';
+import { 
+  horizontalButtonClicked, 
+  horizontalButtonUnclicked, 
+  verticalButtonClicked, 
+  verticalButtonUnclicked,
+  serverButtonUnclicked,
+  serverButtonClicked,
+  dbButtonUnclicked,
+  dbButtonClicked } from '../graphics/buttons';
 
 function PlacementInventory ({ assets, setAssets, activeAssetIndex, setActiveAssetIndex }) {
   const [placeVertically, setPlaceVertically] = useState(true);
@@ -33,9 +42,63 @@ function PlacementInventory ({ assets, setAssets, activeAssetIndex, setActiveAss
       <div className="placement-inventory">
         {inventoryList}
       </div>
-      <div>
-        <button onClick={() => setPlaceVertically(!placeVertically)}>{placeVertically ? 'Vertical' : 'Horizontal'}</button>
-        <button onClick={() => setIsDatabase(!isDatabase)}>{isDatabase ? 'Database' : 'Server'}</button>
+      <div className="placement-interactions">
+        {placeVertically && <div className="orientation-buttons">
+          <div classname="ghost-button-container">
+            <div className="ghost-button"></div>
+            <div className="button-wrapper">
+              {verticalButtonClicked}
+            </div>
+          </div>
+          <div classname="ghost-button-container">
+              <div className="ghost-button" onClick={() => setPlaceVertically(false)}></div>
+              <div className="button-wrapper">
+                {horizontalButtonUnclicked}
+              </div>
+          </div>
+        </div>}
+        {!placeVertically && <div className="orientation-buttons">
+        <div classname="ghost-button-container">
+            <div className="ghost-button" onClick={()=> setPlaceVertically(true)}></div>
+            <div className="button-wrapper">
+              {verticalButtonUnclicked}
+            </div>
+          </div>
+          <div classname="ghost-button-container">
+            <div className="ghost-button"></div>
+            <div className="button-wrapper">
+              {horizontalButtonClicked}
+            </div>
+          </div>
+        </div>}
+        {isDatabase && <div className="asset-type-buttons">
+        <div classname="ghost-button-container">
+            <div className="ghost-button"></div>
+            <div className="button-wrapper">
+              {dbButtonClicked}
+            </div>
+          </div>
+          <div classname="ghost-button-container">
+            <div className="ghost-button" onClick={()=>setIsDatabase(false)}></div>
+            <div className="button-wrapper">
+              {serverButtonUnclicked}
+            </div>
+          </div>
+        </div>}
+        {!isDatabase && <div className="asset-type-buttons">
+        `<div classname="ghost-button-container">
+            <div className="ghost-button" onClick={()=>setIsDatabase(true)}></div>
+            <div className="button-wrapper">
+              {dbButtonUnclicked}
+            </div>
+          </div>
+          <div classname="ghost-button-container">
+            <div className="ghost-button"></div>
+            <div className="button-wrapper">
+              {serverButtonClicked}
+            </div>
+          </div>
+        </div>}
       </div>
     </div>
   )

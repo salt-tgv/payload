@@ -1,5 +1,7 @@
 .placement-inventory {
-  background: pink;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .placement-inventory__button--active {
@@ -13,9 +15,51 @@
   height: 50px;
 }
 
+.placement-interactions {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
 .inventory-wrapper {
   display: flex;
-  height: 250px;
   flex-direction: column;
   justify-content: space-between;
+  margin-right: 20px;
+}
+
+.orientation-buttons {
+  display: flex;
+  align-items: flex-start;
+  justify-content: start;
+  margin-bottom: -8vmin;
+  margin-right: -2vmin;
+}
+
+.asset-type-buttons {
+  display: flex;
+  align-items: flex-start;
+  justify-content: start;
+  margin-bottom: -8vmin;
+  margin-right: -2vmin;
+}
+
+.button-wrapper {
+  position: relative;
+  left: -3vmin;
+  top: -9vmin;
+  margin-right: -2vmin;
+  pointer-events: none;
+}
+
+.ghost-button-container {
+  display: flex;
+  justify-content: start;
+  align-items: flex-start;
+
+}
+
+.ghost-button {
+  width: 6vmin;
+  height: 6vmin;
 }

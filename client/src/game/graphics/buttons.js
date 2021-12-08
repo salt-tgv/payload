@@ -1,4 +1,4 @@
-const serverButtonUnclicked = <svg xmlns="http://www.w3.org/2000/svg" width="150%" height="150%" viewBox="0 0 150 150">
+const serverButtonUnclicked = <svg xmlns="http://www.w3.org/2000/svg" width="9vmin" height="9vmin" viewBox="0 0 150 150">
 <g>
   <rect width="150" height="150" fill="none"/>
   <rect x="40" y="40" width="100" height="100" fill="#56c993"/>
@@ -9,17 +9,17 @@ const serverButtonUnclicked = <svg xmlns="http://www.w3.org/2000/svg" width="150
   <line x1="100" y1="100" x2="130" y2="130" fill="none" stroke="#56c993" stroke-miterlimit="10" stroke-width="5"/>
 </g>
 </svg>
-const serverButtonClicked = <svg xmlns="http://www.w3.org/2000/svg" width="150%" height="150%" viewBox="0 0 150 150">
+const serverButtonClicked = <svg xmlns="http://www.w3.org/2000/svg" width="9vmin" height="9vmin" viewBox="0 0 150 150">
 <g>
   <rect width="150" height="150" fill="none"/>
-  <rect x="50.15" y="50.15" width="100" height="100" fill="#56c993"/>
+  <rect x="50" y="50" width="100" height="100" fill="#56c993"/>
   <polygon points="140.15 90.15 110.15 60.15 60.15 60.15 60.15 110.15 90.15 140.15 140.15 140.15 140.15 90.15" fill="#00522c"/>
   <polyline points="60.15 110.15 110.15 110.15 110.15 60.15" fill="none" stroke="#56c993" stroke-miterlimit="10" stroke-width="5"/>
   <line x1="110.15" y1="110.15" x2="140.15" y2="140.15" fill="none" stroke="#56c993" stroke-miterlimit="10" stroke-width="5"/>
 </g>
 </svg>
 
-const dbButtonUnclicked = <svg xmlns="http://www.w3.org/2000/svg" width="150%" height="150%" viewBox="0 0 150 150">
+const dbButtonUnclicked = <svg xmlns="http://www.w3.org/2000/svg" width="9vmin" height="9vmin" viewBox="0 0 150 150">
 <g>
   <rect width="150" height="150" fill="none"/>
   <rect x="40" y="40" width="100" height="100" fill="#56c993"/>
@@ -32,10 +32,10 @@ const dbButtonUnclicked = <svg xmlns="http://www.w3.org/2000/svg" width="150%" h
 </g>
 </svg>
 
-const dbButtonClicked = <svg xmlns="http://www.w3.org/2000/svg" width="150%" height="150%" viewBox="0 0 150 150">
+const dbButtonClicked = <svg xmlns="http://www.w3.org/2000/svg" width="9vmin" height="9vmin" viewBox="0 0 150 150">
 <g>
   <rect width="150" height="150" fill="none"/>
-  <rect x="50" y="49.55" width="100" height="100" fill="#56c993"/>
+  <rect x="50" y="50" width="100" height="100" fill="#56c993"/>
   <circle cx="85" cy="84.55" r="25" fill="#00522c"/>
   <circle cx="115" cy="114.55" r="25" fill="#00522c"/>
   <rect x="75" y="78.34" width="50" height="42.43" transform="translate(-41.1 99.87) rotate(-45)" fill="#00522c"/>
@@ -43,7 +43,7 @@ const dbButtonClicked = <svg xmlns="http://www.w3.org/2000/svg" width="150%" hei
 </g>
 </svg>
 
-const horizontalButtonUnclicked = <svg xmlns="http://www.w3.org/2000/svg" width="150%" height="150%" viewBox="0 0 150 150">
+const horizontalButtonUnclicked = <svg xmlns="http://www.w3.org/2000/svg" width="9vmin" height="9vmin" viewBox="0 0 150 150">
 <g>
   <rect width="150" height="150" fill="none"/>
   <rect x="40" y="40" width="100" height="100" fill="#56c993"/>
@@ -53,7 +53,7 @@ const horizontalButtonUnclicked = <svg xmlns="http://www.w3.org/2000/svg" width=
 </g>
 </svg>
 
-const horizontalButtonClicked = <svg xmlns="http://www.w3.org/2000/svg" width="150%" height="150%" viewBox="0 0 150 150">
+const horizontalButtonClicked = <svg xmlns="http://www.w3.org/2000/svg" width="9vmin" height="9vmin" viewBox="0 0 150 150">
 <g>
   <rect width="150" height="150" fill="none"/>
   <rect x="49.94" y="49.94" width="100" height="100" fill="#56c993"/>
@@ -61,7 +61,7 @@ const horizontalButtonClicked = <svg xmlns="http://www.w3.org/2000/svg" width="1
 </g>
 </svg>
 
-const verticalButtonUnclicked = <svg xmlns="http://www.w3.org/2000/svg" width="150%" height="150%" viewBox="0 0 150 150">
+const verticalButtonUnclicked = <svg xmlns="http://www.w3.org/2000/svg" width="9vmin" height="9vmin" viewBox="0 0 150 150">
 <g>
   <rect width="150" height="150" fill="none"/>
   <rect x="40" y="40" width="100" height="100" fill="#56c993"/>
@@ -71,10 +71,10 @@ const verticalButtonUnclicked = <svg xmlns="http://www.w3.org/2000/svg" width="1
 </g>
 </svg>
 
-const verticalButtonClicked = <svg xmlns="http://www.w3.org/2000/svg" width="150%" height="150%" viewBox="0 0 150 150">
+const verticalButtonClicked = <svg xmlns="http://www.w3.org/2000/svg" width="9vmin" height="9vmin" viewBox="0 0 150 150">
 <g>
   <rect width="150" height="150" fill="none"/>
-  <rect x="50.15" y="50.15" width="100" height="100" fill="#56c993"/>
+  <rect x="50" y="50" width="100" height="100" fill="#56c993"/>
   <polygon points="60.15 60.15 60.15 140.15 90.15 110.15 110.15 110.15 110.15 90.15 140.15 60.15 60.15 60.15" fill="#00522c"/>
 </g>
 </svg>
