@@ -1,0 +1,19 @@
+{
+  "name": "payload",
+  "version": "1.0.0",
+  "description": "game",
+  "main": "server/server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/salt-tgv/payload.git"
+  },
+  "author": "tgv",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/salt-tgv/payload/issues"
+  },
+  "homepage": "https://github.com/salt-tgv/payload#readme"
+}
