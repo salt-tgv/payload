@@ -18,7 +18,7 @@ const PORT = process.env.PORT || 1337;
 async function startServer () {
   try {
     const app = express();
-    app.use(express.static('../client/build/static'));
+    app.use(express.static(path.join(__dirname, 'build')));
 
     const httpServer = http.createServer(app);
 
@@ -60,7 +60,8 @@ async function startServer () {
     server.applyMiddleware({ app });
     
     app.get('*', (req, res) => {
-      res.sendFile(BUILD_PATH);
+      // res.sendFile(BUILD_PATH);
+      res.send();
     })
 
     httpServer.listen(PORT, console.log('Server activated... 👽'));
