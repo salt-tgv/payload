@@ -59,7 +59,7 @@ async function startServer () {
     await server.start();
     server.applyMiddleware({ app });
 
-    app.get('/user', (req, res) => {
+    app.get('*', (req, res) => {
       res.sendFile(BUILD_PATH);
     })
 
