@@ -20,6 +20,10 @@ async function startServer () {
     const app = express();
     app.use(express.static(path.join(__dirname, 'build')));
 
+    app.get('*', (req, res) => {
+      res.sendFile(BUILD_PATH);
+    })
+
     const httpServer = http.createServer(app);
 
     const schema = makeExecutableSchema({
@@ -59,9 +63,6 @@ async function startServer () {
     await server.start();
     server.applyMiddleware({ app });
     
-    app.get('*', (req, res) => {
-      res.sendFile(BUILD_PATH);
-    })
 
     httpServer.listen(PORT, console.log('Server activated... 👽'));
   } catch(error) {
