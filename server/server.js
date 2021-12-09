@@ -12,13 +12,14 @@ const path = require('path');
 // const cors = require('cors');
 
 const BUILD_PATH = path.join(__dirname, '../client/build/index.html');
-console.log(__dirname);
 const PORT = process.env.PORT || 1337;
 //https://www.apollographql.com/docs/apollo-server/integrations/middleware/#swapping-out-apollo-server
 
 async function startServer () {
   try {
     const app = express();
+    app.use(express.static('../client/build/static'));
+
     const httpServer = http.createServer(app);
 
     const schema = makeExecutableSchema({
@@ -58,7 +59,6 @@ async function startServer () {
     await server.start();
     server.applyMiddleware({ app });
     
-    app.use(express.static('../client/build'))
     app.get('*', (req, res) => {
       res.sendFile(BUILD_PATH);
     })
