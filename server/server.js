@@ -60,7 +60,7 @@ async function startServer () {
     server.applyMiddleware({ app });
     
     app.get('*', (req, res) => {
-      res.send();
+      res.sendFile(BUILD_PATH);
     })
 
     httpServer.listen(PORT, console.log('Server activated... 👽'));
