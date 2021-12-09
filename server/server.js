@@ -11,11 +11,11 @@ const { dbInit } = require('./db/db');
 const path = require('path');
 // const cors = require('cors');
 
-
 const BUILD_PATH = path.join(__dirname, '../client/build/index.html');
 const PORT = process.env.PORT || 1337;
 //https://www.apollographql.com/docs/apollo-server/integrations/middleware/#swapping-out-apollo-server
 
+console.log('helo');
 async function startServer () {
   try {
     const app = express();
