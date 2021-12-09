@@ -17,7 +17,7 @@ function App() {
   const [gameId, setGameId] = useState('');
 
   const httpLink = new HttpLink({
-    uri: 'https://tgv-payload.herokuapp.com/graphql',
+    uri: '/graphql',
   })
   const client = new ApolloClient({
     link: httpLink,
