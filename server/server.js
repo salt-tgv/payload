@@ -20,8 +20,8 @@ async function startServer () {
     const app = express();
     app.use(express.static(path.join(__dirname, 'build')));
 
-    app.get('*', (req, res) => {
-      res.sendFile(BUILD_PATH);
+    app.get('/user', (req, res) => {
+      res.send("helo");
     })
 
     const httpServer = http.createServer(app);
