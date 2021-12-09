@@ -11,7 +11,7 @@ const { dbInit } = require('./db/db');
 const path = require('path');
 // const cors = require('cors');
 
-const BUILD_PATH = path.join(__dirname, '../client/build/index.html');
+const BUILD_PATH = path.join(__dirname, 'build/index.html');
 const PORT = process.env.PORT || 1337;
 //https://www.apollographql.com/docs/apollo-server/integrations/middleware/#swapping-out-apollo-server
 
@@ -19,10 +19,6 @@ async function startServer () {
   try {
     const app = express();
     app.use(express.static(path.join(__dirname, 'build')));
-
-    app.get('/user', (req, res) => {
-      res.send("helo");
-    })
 
     const httpServer = http.createServer(app);
 
@@ -62,7 +58,10 @@ async function startServer () {
   
     await server.start();
     server.applyMiddleware({ app });
-    
+
+    app.get('/user', (req, res) => {
+      res.sendFile(BUILD_PATH);
+    })
 
     httpServer.listen(PORT, console.log('Server activated... 👽'));
   } catch(error) {
