@@ -9,7 +9,7 @@ import './auth.css';
 
 function Signup() {
   const [signUpFunction, { data, loading, error }] = useMutation(SIGN_UP);
-  const [credentialsInput, setCredentialsInput] = useState({});
+  const [credentialsInput, setCredentialsInput] = useState({ username: '', password: '' });
   
   const navigate = useNavigate();
 

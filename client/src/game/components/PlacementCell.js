@@ -17,7 +17,7 @@ function PlacementCell ({cellData, onClickCb, onEnterCb, onLeaveCb, x, y, active
     {(!hasAsset && isHovered) && cellSolidGreen}
     {(!hasAsset && !isHovered) && cellGradientGreen}
     {cellData.asset === 'SERVER' && <div className="asset-container-placement">{serverGreen}</div>}
-    {cellData.asset === 'DB' && <div className="asset-container">{dbGreen}</div>}
+    {cellData.asset === 'DB' && <div className="asset-container-placement">{dbGreen}</div>}
     </div>)
 }
 

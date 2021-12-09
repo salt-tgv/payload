@@ -1,5 +1,5 @@
 import { connectingText } from "../graphics/text";
-import './connecting.css';
+import './Connecting.css';
 
 function Connecting({ gameId }) {
     const link = `${window.location.hostname}/joingame/${gameId}`
@@ -18,7 +18,7 @@ function Connecting({ gameId }) {
                         <h2 className="connecting-info__heading">Game ID:</h2>
                         <p className="connecting-info__text">{gameId}</p>
                     </div>
-                    <i class="far fa-clone"></i>
+                    <i className="far fa-clone"></i>
                 </div>
                 <div className="card-wrapper" onClick={()=>{
                     navigator.clipboard.writeText(link)

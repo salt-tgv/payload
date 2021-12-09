@@ -9,7 +9,7 @@ import './auth.css';
 
 function Login() {
   const [logInFunction, { data, loading, error }] = useMutation(LOG_IN);
-  const [credentialsInput, setCredentialsInput] = useState({});
+  const [credentialsInput, setCredentialsInput] = useState({ username: '', password: '' });
   const navigate = useNavigate();
 
   const handleSubmit = (e) => {

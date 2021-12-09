@@ -17,10 +17,10 @@ function PlacementInventory ({ assets, setAssets, activeAssetIndex, setActiveAss
       className={index === activeAssetIndex ? "placement-inventory__button--active" : "placement-inventory__button"}
       onClick={() => setActiveAssetIndex(index)} 
       key={index}>
-        <div class="button-asset">
+        <div className="button-asset">
           {asset.type === 'DB' ? dbGreen : serverGreen}
         </div>
-        <div class="button-asset-size">
+        <div className="button-asset-size">
           <p>X {asset.size}</p>
         </div>
       </div>
@@ -54,13 +54,13 @@ function PlacementInventory ({ assets, setAssets, activeAssetIndex, setActiveAss
       </div>
       <div className="placement-interactions">
         {placeVertically && <div className="orientation-buttons">
-          <div classname="ghost-button-container">
+          <div className="ghost-button-container">
             <div className="ghost-button"></div>
             <div className="button-wrapper">
               {verticalButtonClicked}
             </div>
           </div>
-          <div classname="ghost-button-container">
+          <div className="ghost-button-container">
               <div className="ghost-button" onClick={() => setPlaceVertically(false)}></div>
               <div className="button-wrapper">
                 {horizontalButtonUnclicked}
@@ -68,13 +68,13 @@ function PlacementInventory ({ assets, setAssets, activeAssetIndex, setActiveAss
           </div>
         </div>}
         {!placeVertically && <div className="orientation-buttons">
-        <div classname="ghost-button-container">
+        <div className="ghost-button-container">
             <div className="ghost-button" onClick={()=> setPlaceVertically(true)}></div>
             <div className="button-wrapper">
               {verticalButtonUnclicked}
             </div>
           </div>
-          <div classname="ghost-button-container">
+          <div className="ghost-button-container">
             <div className="ghost-button"></div>
             <div className="button-wrapper">
               {horizontalButtonClicked}
@@ -82,13 +82,13 @@ function PlacementInventory ({ assets, setAssets, activeAssetIndex, setActiveAss
           </div>
         </div>}
         {isDatabase && <div className="asset-type-buttons">
-        <div classname="ghost-button-container">
+        <div className="ghost-button-container">
             <div className="ghost-button"></div>
             <div className="button-wrapper">
               {dbButtonClicked}
             </div>
           </div>
-          <div classname="ghost-button-container">
+          <div className="ghost-button-container">
             <div className="ghost-button" onClick={()=>setIsDatabase(false)}></div>
             <div className="button-wrapper">
               {serverButtonUnclicked}
@@ -96,13 +96,13 @@ function PlacementInventory ({ assets, setAssets, activeAssetIndex, setActiveAss
           </div>
         </div>}
         {!isDatabase && <div className="asset-type-buttons">
-        `<div classname="ghost-button-container">
+        <div className="ghost-button-container">
             <div className="ghost-button" onClick={()=>setIsDatabase(true)}></div>
             <div className="button-wrapper">
               {dbButtonUnclicked}
             </div>
           </div>
-          <div classname="ghost-button-container">
+          <div className="ghost-button-container">
             <div className="ghost-button"></div>
             <div className="button-wrapper">
               {serverButtonClicked}

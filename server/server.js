@@ -8,8 +8,11 @@ const express = require('express');
 const typeDefs = require('./graphql/typedefs');
 const resolvers = require('./graphql/resolvers');
 const { dbInit } = require('./db/db');
+const path = require('path');
 // const cors = require('cors');
 
+
+const BUILD_PATH = path.join(__dirname, '../client/build/index.html');
 const PORT = process.env.PORT || 1337;
 //https://www.apollographql.com/docs/apollo-server/integrations/middleware/#swapping-out-apollo-server
 
@@ -55,10 +58,10 @@ async function startServer () {
     await server.start();
     server.applyMiddleware({ app });
     
-    // app.use(express.static('../client/build'))
-    // app.get('*', (req, res) => {
-    //   res.sendFile('/Users/salt-dev/Documents/projects/final-project/client/build/index.html')
-    // })
+    app.use(express.static('../client/build'))
+    app.get('*', (req, res) => {
+      res.sendFile(BUILD_PATH);
+    })
 
     httpServer.listen(PORT, console.log('Server activated... 👽'));
   } catch(error) {

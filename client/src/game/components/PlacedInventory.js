@@ -7,10 +7,10 @@ function PlacedInventory ({ assets, resetPlacedAsset }) {
       className="placement-inventory__button--active"
       onClick={() => resetPlacedAsset(index)} 
       key={index}>
-        <div class="button-asset">
+        <div className="button-asset">
           {asset.type === 'DB' ? dbGreen : serverGreen}
         </div>
-        <div class="button-asset-size">
+        <div className="button-asset-size">
           <p>X {asset.size}</p>
         </div>
       </div>

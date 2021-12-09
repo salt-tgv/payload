@@ -44,7 +44,7 @@
 .orientation-buttons {
   display: flex;
   align-items: flex-start;
-  justify-content: start;
+  justify-content: flex-start;
   margin-bottom: -8vmin;
   margin-right: -2vmin;
 }
@@ -52,7 +52,7 @@
 .asset-type-buttons {
   display: flex;
   align-items: flex-start;
-  justify-content: start;
+  justify-content: flex-start;
   margin-bottom: -8vmin;
   margin-right: -2vmin;
 }
@@ -67,7 +67,8 @@
 
 .ghost-button-container {
   display: flex;
-  justify-content: start;
+  flex-direction: column;
+  justify-content: flex-start;
   align-items: flex-start;
 
 }

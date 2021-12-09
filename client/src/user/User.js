@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router';
-import { Link } from 'react-router-dom';
 import { useQuery, useMutation } from '@apollo/client'
 import CreateGame from './CreateGame';
 import JoinGame from './JoinGame';
@@ -66,7 +65,7 @@ function User({ setPlayerId, setGameId }) {
         { data && data.validateUser && 
         <section className="user">
           <div className="user__header-image">{userPageText}</div>
-          <h1 className="user__header">Welcome {cookies.username} <i class="fas fa-user-secret"></i></h1>
+          <h1 className="user__header">Welcome {cookies.username} <i className="fas fa-user-secret"></i></h1>
           <div className="user__game-actions"> 
             <CreateGame playerId={cookies.playerId} setGameId={setGameId} />
             <JoinGame playerId={cookies.playerId} setGameId={setGameId} />

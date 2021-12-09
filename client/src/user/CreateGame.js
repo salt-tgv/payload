@@ -10,7 +10,6 @@ function CreateGame({ playerId, setGameId }) {
   useEffect(() => {
     if (data)
       if (data.createGame) {
-        console.log(data.createGame)
         setGameId(data.createGame);
         navigate('../');
       } 
@@ -18,7 +17,7 @@ function CreateGame({ playerId, setGameId }) {
 
   return(
     <div className="game-actions__create-game" onClick={() => createGameFunction({ variables: { playerId }})}>
-      <i class="fas fa-power-off"></i>
+      <i className="fas fa-power-off"></i>
       <p>Create game</p>
     </div>
   )

@@ -30,7 +30,7 @@ function JoinGame({ playerId, setGameId }) {
   return (
     <div className="game-actions__join-game" onClick={() => setShowForm(true)}>
       { !notFound && <div className="game-actions__join-game">
-        <i class="fas fa-satellite-dish"></i>
+        <i className="fas fa-satellite-dish"></i>
         { !showForm && <p>Join Game</p>}
         { showForm && 
         <form className="join-game__form" onSubmit={handleSubmit}>

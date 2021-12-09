@@ -24,7 +24,7 @@ function Game({ playerId, gameId }) {
     })
   }, []);
     
-  if (loading) return <p>Loading...</p>;
+  if (loading) return <div className="user-page"><div className="user-wrapper"><div className="loading"><h3>Loading...</h3></div></div></div>;
   if (error) return (<> { window.location.href="/user"} </>);
   
   const { gameState } = data;
@@ -51,10 +51,10 @@ function Game({ playerId, gameId }) {
     <div className="App">
       <div className="placement-page">
         { gameOver && 
-          <>
-          <h1>{gameOver}</h1> 
-          <button onClick={() => navigate('../user')}>Exit</button>
-          </>}
+            <div className="game-over">
+            <h1 className="game-over__message">{gameOver}</h1> 
+            <button className="game-over__exit" onClick={() => navigate('../user')}>Exit</button>
+          </div>}
         { !allJoined && <Connecting gameId={gameId} />}
         {areBothReady ? playBoards : allJoined && <PlacementBoard gameState={gameState} playerId={playerId}/>}
       </div>
