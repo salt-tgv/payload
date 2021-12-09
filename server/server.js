@@ -60,7 +60,6 @@ async function startServer () {
     server.applyMiddleware({ app });
     
     app.get('*', (req, res) => {
-      // res.sendFile(BUILD_PATH);
       res.send();
     })
 

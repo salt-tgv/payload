@@ -14,7 +14,7 @@ function InitializeGame({ playerId, gameId }) {
   }, [])
 
   const wsLink = new WebSocketLink({
-    uri: 'ws://tgv-payload.herokuapp.com/graphql',
+    uri: 'wss://tgv-payload.herokuapp.com/graphql',
     options: {
       reconnect: true,
       connectionParams: {
@@ -25,7 +25,7 @@ function InitializeGame({ playerId, gameId }) {
   })
   
   const httpLink = new HttpLink({
-    uri: 'http://tgv-payload.herokuapp.com/graphql',
+    uri: 'https://tgv-payload.herokuapp.com/graphql',
     headers: {
       playerid: playerId,
       gameid: gameId
